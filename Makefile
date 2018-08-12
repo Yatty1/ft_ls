@@ -6,7 +6,7 @@
 #    By: syamada <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/06 21:25:07 by syamada           #+#    #+#              #
-#    Updated: 2018/08/11 20:58:16 by syamada          ###   ########.fr        #
+#    Updated: 2018/08/12 09:30:49 by syamada          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,8 +71,8 @@ cleandebug:
 	@rm -rf d$(LS).dSYM
 	@rm -f d$(LS)
 
-.PHONY: qls
-qls:
+.PHONY: rels
+rels:
 	@printf "%b" "Quick recompile for $(CHECKER)\n"
 	@rm -f $(LS)
 	@make $(LS)
