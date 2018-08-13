@@ -6,13 +6,13 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/07 17:56:36 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/07 18:05:18 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/13 13:16:15 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_strjoinfree(const char *s1, const char *s2)
+char		*ft_strjoinfree(char *s1, char *s2)
 {
 	char	*j_s;
 

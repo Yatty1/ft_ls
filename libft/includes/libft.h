@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 13:46:49 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/07 18:12:29 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/13 13:17:25 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,13 @@ t_list				*ft_samplelist(size_t len);
 char				*ft_strrev(char *str);
 void				ft_lstpush(t_list **alst, void *content, size_t size);
 int					ft_wordcount(char *s, char d);
-char				*ft_strjoin_with(const char *s1, const char *s2, char c);
-char				*ft_strjoinfree_with(const char *s1, const char *s2, char c);
+char				*ft_strjoin_with(char const *s1, char const *s2, char c);
+char				*ft_strjoinfree_with(char *s1, char *s2, char c);
 char				*ft_strndup(char *str, int i, int n);
 char				*ft_charstr(char c);
 char				*ft_strappend(char *str, char c);
 char				*ft_strprepend(char *str, char c);
-char				*ft_strjoinfree(const char *s1, const char *s2);
+char				*ft_strjoinfree(char *s1, char *s2);
 
 char				*ft_ltoa(long n);
 char				*ft_lltoa(long long n);

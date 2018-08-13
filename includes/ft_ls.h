@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:37 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/12 14:48:53 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/13 13:06:23 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <time.h>
 # include <errno.h>
 
+# define MATCH(value, flag) ((value & flag) == flag)
+
 typedef struct	s_options
 {
 	int		l;
@@ -32,21 +34,15 @@ typedef struct	s_options
 	int		a;
 }				t_options;
 
-typedef struct	s_dirs
-{
-	char			*path;
-	struct s_dirs	*next;
-}				t_dirs;
-
 typedef struct	s_meta
 {
+	char	*name;
 	char	*types;
 	int		n_links;
 	char	*owner;
 	char	*group;
 	int		size;
 	time_t	m_time;
-	char	*name;
 }				t_meta;
 
 char			**check_option(int *argc, char **argv, t_options *opts);
