@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:26 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/15 13:23:10 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/15 13:29:57 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,6 @@ void	openread_dir(char *dirname, int is_first)
 	}
 	ft_putstr("===============CONTENT===============\n");
 	input = sort_content(dircontent, 1);
-	while (dircontent)
-	{
-		ft_printf("name: %s\n", dircontent->content);
-		dircontent = dircontent->next;
-	}
 	while (*input)
 		ft_putendl(*input++);
 	ft_putstr("==============CONTENT END===============\n");
