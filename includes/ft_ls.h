@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:37 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/13 13:06:23 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/14 15:24:12 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ typedef struct	s_meta
 }				t_meta;
 
 char			**check_option(int *argc, char **argv, t_options *opts);
+void			quick_sort(char ***input, int left, int right, int is_asc);
 
 #endif
