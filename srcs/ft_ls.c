@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:26 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/14 20:59:34 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/15 12:48:24 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	openread_dir(char *dirname, int is_first)
 	char			*path;
 	t_list			*dirlist;
 	t_list			*dircontent;
+	char			**input;
 
 	dirlist = NULL;
 	dircontent = NULL;
@@ -34,9 +35,9 @@ void	openread_dir(char *dirname, int is_first)
 	{
 		path = ft_strjoin_with(dirname, dp->d_name, '/');
 		stat(path, &buf);
-		if ((buf.st_mode & S_IFREG) == S_IFREG)
+		if (MATCH(buf.st_mode, S_IFREG))
 			ft_lstadd(&dircontent, ft_lstnew(dp->d_name, ft_strlen(dp->d_name)));
-		else if ((buf.st_mode & S_IFDIR) == S_IFDIR)
+		else if (MATCH(buf.st_mode, S_IFDIR))
 		{
 			if (ft_strequ(".", dp->d_name) || ft_strequ("..", dp->d_name))
 			{
@@ -48,11 +49,10 @@ void	openread_dir(char *dirname, int is_first)
 		}
 	}
 	ft_putstr("===============CONTENT===============\n");
-	while (dircontent)
-	{
-		ft_putendl((char *)dircontent->content);
-		dircontent = dircontent->next;
-	}
+	input = sort_content(dircontent, 1);
+	int i = 0;
+	while (input[i])
+		ft_putendl(input[i++]);
 	ft_putstr("==============CONTENT END===============\n");
 	while (dirlist)
 	{

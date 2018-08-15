@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 07:48:59 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/14 20:59:22 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/15 12:48:26 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char			**convert_two(t_list *list)
 		input[i++] = ft_strdup(list->content);
 		list = list->next;
 	}
+	input[i] = 0;
 	return (input);
 }
 
@@ -69,12 +70,13 @@ void			quick_sort(char ***input, int left, int right, int is_asc)
 	quick_sort(input, pivot + 1, right, is_asc);
 }
 
-void			sort_content(t_list *list, int is_asc)
+char			**sort_content(t_list *list, int is_asc)
 {
 	char	**input;
 
 	input = convert_two(list);
 	quick_sort(&input, 0, ft_lstsize(list) - 1, is_asc);
+	return (input);
 }
 
 /*
