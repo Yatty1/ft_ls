@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:37 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/16 16:03:01 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/16 16:21:00 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,15 @@ typedef struct	s_options
 
 typedef struct	s_meta
 {
-	char	*mode;
-	int		n_links;
-	char	*owner;
-	char	*group;
-	int		size;
-	time_t	m_time;
-	char	*name;
-	char	*symlink;
-	char	*path;
+	char			*mode;
+	unsigned int	n_links;
+	char			*owner;
+	char			*group;
+	int				size;
+	time_t			m_time;
+	char			*name;
+	char			*symlink;
+	char			*path;
 }				t_meta;
 
 char			**check_option(int *argc, char **argv, t_options *opts);

@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:26 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/16 16:09:04 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/16 16:21:20 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ void	get_file(char *filename, t_options opts)
 		{
 			data = get_metadata(buf, data, opts);
 			data->name = filename;
-			ft_printf("%s  %d %s %s  %d %s\n", data->mode, data->n_links,
-					data->owner, data->group, data->size, data->name);
+			ft_printf("%s  %d %s  %s  %d %s %s\n", data->mode, data->n_links,
+					data->owner, data->group, data->size, ft_strsub(ctime(&data->m_time), 4, 12), data->name);
 		}
 		else
 			ft_putendl(filename);
