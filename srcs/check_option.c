@@ -6,33 +6,38 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/12 14:48:25 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/13 10:24:51 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/16 16:06:28 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
+int		is_validoption(char c)
+{
+	if (c == 'l' || c == 'r' || c == 'R'
+			|| c == 't' || c == 'a')
+		return (1);
+	return (0);
+}
 
 char	**check_option(int *argc, char **argv, t_options *opts)
 {
 	int		i;
 
 	i = 1;
-	opts->l = 0;
-	opts->r = 0;
-	opts->c_r = 0;
-	opts->t = 0;
-	opts->a = 0;
 	if (*argc < 2 || argv[1][0] != '-')
 		return (argv);
 	while (argv[1][i])
 	{
-		opts->l = argv[1][i] == 'l' ? 1 : opts->l;
-		opts->r = argv[1][i] == 'r' ?  1 : opts->r;
-		opts->c_r = argv[1][i] == 'R' ? 1 : opts->c_r;
-		opts->t = argv[1][i] == 't' ? 1 : opts->t;
-		opts->a = argv[1][i] == 'a' ? 1 : opts->a;
+		if (!is_validoption(argv[1][i]))
+			illegal_option(argv[1][i]);
 		i++;
 	}
+	opts->l = ft_strchr(argv[1], 'l') ? 1 : 0;
+	opts->r = ft_strchr(argv[1], 'r') ?  1 : 0;
+	opts->c_r = ft_strchr(argv[1], 'R') ?  1 : 0;
+	opts->t = ft_strchr(argv[1], 't') ?  1 : 0;
+	opts->a = ft_strchr(argv[1], 'a') ?  1 : 0;
 	if (opts->l || opts->r || opts->c_r || opts->t || opts->a)
 	{
 		argv += 1;
@@ -40,4 +45,3 @@ char	**check_option(int *argc, char **argv, t_options *opts)
 	}
 	return (argv);
 }
-

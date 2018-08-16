@@ -6,7 +6,7 @@
 #    By: syamada <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/06 21:25:07 by syamada           #+#    #+#              #
-#    Updated: 2018/08/15 12:48:48 by syamada          ###   ########.fr        #
+#    Updated: 2018/08/16 16:03:13 by syamada          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ SRCDIR		:= srcs
 INCDIR		:= includes
 
 LS			:= ft_ls
-LSSRC		:= $(addprefix $(SRCDIR)/, ft_ls.c check_option.c sort_funcs.c)
+LSSRC		:= $(addprefix $(SRCDIR)/, ft_ls.c check_option.c sort_funcs.c \
+						error_exit.c get_info.c get_filetype.c)
 
 #colors
 COM_COLOR	:= \033[0;34m

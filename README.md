@@ -11,16 +11,16 @@
 - lstat
 - getpwuid
 - getgrgid
-- listxattr
-- getxattr
-- time
-- ctime
-- readlink
 - malloc
 - free
 - perror
 - strerror
 - exit
+- listxattr
+- getxattr
+- readlink
+- time
+- ctime
 
 #### Requirement
 
