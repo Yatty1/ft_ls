@@ -41,7 +41,7 @@ void	openread_dir(char *dirname, int opts)
 		create_data(&data, dp->d_name, path);
 		ft_strdel(&path);
 	}
-	data = bubble_sort(&data, !MATCH(opts, LR));
+	data = dispatch_sort(&data, opts);
 	print_dircontent(&data, opts);
 	while (data && MATCH(opts, CR))
 	{
