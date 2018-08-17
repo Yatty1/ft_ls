@@ -6,14 +6,17 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 15:29:21 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/16 20:50:58 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/17 13:11:03 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_meta		*get_metadata(struct stat st, t_meta *data, int opts)
+t_meta		*get_metadata(t_meta *data, int opts)
 {
+	struct stat	st;
+
+	stat(data->path, &st);
 	data = get_mode(st, data);
 	data->n_links = st.st_nlink;
 	data->owner = getpwuid(st.st_uid)->pw_name;

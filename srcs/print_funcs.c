@@ -6,16 +6,34 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 22:49:14 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/16 22:56:46 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/17 13:37:34 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		print_longformat(t_meta *data)
+char		*time_determine(time_t t)
+{
+	time_t	curr;
+	char	*str;
+
+	time(&curr);
+	if ((curr - t) < HALF_A_YEAR)
+		str = ft_strsub(ctime(&t), 4, 12);
+	else
+	{
+		str = ft_strsub(ctime(&t), 4, 7);
+		str = ft_strjoinfree(str, ft_strsub(ctime(&t), 20, 4));
+	}
+	return (str);
+}
+
+
+void		print_longformat(t_meta *data, int width)
 {
 	char	*time;
 
+	/*
 	ft_putstr(data->mode);
 	ft_putstr("  ");
 	ft_putnbr((int)data->n_links);
@@ -24,18 +42,38 @@ void		print_longformat(t_meta *data)
 	ft_putstr(" ");
 	ft_putstr(data->group);
 	ft_putstr("  ");
-	ft_putnbr((int)data->n_links);
+	ft_putnbr((int)data->size);
 	ft_putstr(" ");
-	time = ctime(&data->m_time);
+	time = time_determine(data->m_time);
 	ft_putstr(time);
+	ft_putchar(' ');
 	ft_putendl(data->name);
+	*/
+	time = time_determine(data->m_time);
+	ft_printf("%s  %d %s  %s  %*d %s %s\n", data->mode, data->n_links,
+			data->owner, data->group, width, data->size, time, data->name);
+	ft_strdel(&time);
 }
 
-void		print_dircontent(t_meta *data)
+void		print_dircontent(t_meta **data, int opts)
 {
-	while (data)
+	t_meta		*d;
+	struct stat	st;
+
+	d = *data;
+	while (d && !(opts & (LL | LT)))
 	{
-		ft_putendl(data->name);
-		data = data->next;
+		if (d->name[0] == '.' && !MATCH(opts, LA))
+		{
+			d = d->next;
+			continue ;
+		}
+		ft_putendl(d->name);
+		d = d->next;
 	}
+	if (MATCH(opts, LL))
+		lformat_handler(data, opts);
+	else if (MATCH(opts, LT))
+		time_handler(data, opts);
+//	if (MATCH(opts, CR) && !MATCH(opts, LL))
 }

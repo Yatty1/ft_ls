@@ -6,45 +6,53 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:26 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/16 23:22:24 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/17 13:41:26 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
+DIR		*open_dir(char *dirname)
+{
+	DIR		*dir;
+
+	if (!(dir = opendir(dirname)))
+	{
+		ft_printf("./ft_ls: %s %s", dirname, strerror(errno));
+		return (NULL);
+	}
+	return (dir);
+}
+
 void	openread_dir(char *dirname, int opts)
 {
 	DIR				*dir;
 	struct dirent	*dp;
-	struct stat		buf;
+	struct stat		st;
 	char			*path;
 	t_meta			*data;
 
 	data = NULL;
-	if (!(dir = opendir(dirname)))
-	{
-		ft_printf("./ft_ls: %s: %s\n", dirname, strerror(errno));
+	if (!(dir = open_dir(dirname)))
 		return ;
-	}
 	while ((dp = readdir(dir)))
 	{
 		path = ft_strjoin_with(dirname, dp->d_name, '/');
-		stat(path, &buf);
 		create_data(&data, dp->d_name, path);
-		data = get_metadata(buf, data, opts);
 		ft_strdel(&path);
 	}
 	data = bubble_sort(&data, !MATCH(opts, LR));
-	print_dircontent(data);
+	print_dircontent(&data, opts);
 	while (data && MATCH(opts, CR))
 	{
+		stat(data->path, &st);
 		if (ft_strequ(".", data->name) || ft_strequ("..", data->name)
-				|| data->mode[0] != 'd')
+				|| !MATCH(st.st_mode, S_IFDIR))
 		{
 			data = data->next;
 			continue ;
 		}
-		ft_printf("\n%s:\n", data->path);
+		ft_putendl(data->path);
 		openread_dir(data->path, opts);
 		data = data->next;
 	}
@@ -53,16 +61,14 @@ void	openread_dir(char *dirname, int opts)
 
 void	get_file(char *filename, int opts)
 {
-	struct stat		buf;
 	t_meta			*data;
 
-	data = (t_meta *)malloc(sizeof(t_meta));
+	create_data(&data, filename, filename);
 	if (errno == ENOTDIR)
 	{
-		stat(filename, &buf);
-		if (MATCH(opts, LA))
+		if (MATCH(opts, LL))
 		{
-			data = get_metadata(buf, data, opts);
+			data = get_metadata(data, opts);
 			ft_printf("%s  %d %s  %s  %d %s %s\n", data->mode, data->n_links,
 					data->owner, data->group, data->size, ft_strsub(ctime(&data->m_time), 4, 12), filename);
 		}

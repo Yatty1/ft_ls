@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:37 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/16 23:20:03 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/17 13:37:26 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,18 @@ void			quick_sort(char ***input, int left, int right, int is_asc);
 char			**sort_content(t_list *list, int is_asc);
 
 /*
+** handlers
+*/
+
+void			lformat_handler(t_meta **data, int opts);
+void			time_handler(t_meta **data, int opts);
+
+/*
 ** print funcs
 */
 
-void			print_longformat(t_meta *data);
-void			print_dircontent(t_meta *data);
+void			print_longformat(t_meta *data, int width);
+void			print_dircontent(t_meta **data, int opts);
 
 /*
 ** error handlers
@@ -77,7 +84,7 @@ void			illegal_option(char c);
 ** get info of files and dirs
 */
 
-t_meta			*get_metadata(struct stat st, t_meta *data, int opts);
+t_meta			*get_metadata(t_meta *data, int opts);
 t_meta			*get_mode(struct stat st, t_meta *data);
 char			get_filetype(struct stat st);
 char			get_execpermit(struct stat st);
