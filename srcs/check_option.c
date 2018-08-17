@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/12 14:48:25 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/16 16:06:28 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/16 21:38:17 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		is_validoption(char c)
 	return (0);
 }
 
-char	**check_option(int *argc, char **argv, t_options *opts)
+char	**check_option(int *argc, char **argv, int *opts)
 {
 	int		i;
 
@@ -33,12 +33,12 @@ char	**check_option(int *argc, char **argv, t_options *opts)
 			illegal_option(argv[1][i]);
 		i++;
 	}
-	opts->l = ft_strchr(argv[1], 'l') ? 1 : 0;
-	opts->r = ft_strchr(argv[1], 'r') ?  1 : 0;
-	opts->c_r = ft_strchr(argv[1], 'R') ?  1 : 0;
-	opts->t = ft_strchr(argv[1], 't') ?  1 : 0;
-	opts->a = ft_strchr(argv[1], 'a') ?  1 : 0;
-	if (opts->l || opts->r || opts->c_r || opts->t || opts->a)
+	*opts |= ft_strchr(argv[1], 'l') ? LL : 0;
+	*opts |= ft_strchr(argv[1], 'r') ?  LR : 0;
+	*opts |= ft_strchr(argv[1], 'R') ?  CR : 0;
+	*opts |= ft_strchr(argv[1], 't') && MATCH(*opts, LR) ?  LT : 0;
+	*opts |= ft_strchr(argv[1], 'a') ?  LA : 0;
+	if (*opts & (LL | LR | CR | LT | LA))
 	{
 		argv += 1;
 		*argc -= 1;

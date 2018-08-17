@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:37 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/16 16:23:33 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/16 23:20:03 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,12 @@
 # include <uuid/uuid.h>
 
 # define MATCH(value, flag) ((value & flag) == flag)
-
-typedef struct	s_options
-{
-	int		l;
-	int		r;
-	int		c_r;
-	int		t;
-	int		a;
-}				t_options;
+# define HALF_A_YEAR 15778463
+# define LL 1
+# define LR 2
+# define CR 4
+# define LT 8
+# define LA 16
 
 typedef struct	s_meta
 {
@@ -48,16 +45,27 @@ typedef struct	s_meta
 	char			*name;
 	char			*symlink;
 	char			*path;
+	struct s_meta	*next;
 }				t_meta;
 
-char			**check_option(int *argc, char **argv, t_options *opts);
+char			**check_option(int *argc, char **argv, int *opts);
+
+void			create_data(t_meta **data, char *name, char *path);
 
 /*
 ** sorting funcs
 */
 
+t_meta			*bubble_sort(t_meta **data, int is_asc);
 void			quick_sort(char ***input, int left, int right, int is_asc);
 char			**sort_content(t_list *list, int is_asc);
+
+/*
+** print funcs
+*/
+
+void			print_longformat(t_meta *data);
+void			print_dircontent(t_meta *data);
 
 /*
 ** error handlers
@@ -68,7 +76,8 @@ void			illegal_option(char c);
 /*
 ** get info of files and dirs
 */
-t_meta			*get_metadata(struct stat st, t_meta *data, t_options opts);
+
+t_meta			*get_metadata(struct stat st, t_meta *data, int opts);
 t_meta			*get_mode(struct stat st, t_meta *data);
 char			get_filetype(struct stat st);
 char			get_execpermit(struct stat st);

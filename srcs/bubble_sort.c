@@ -6,37 +6,54 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 16:29:38 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/16 16:35:51 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/16 23:20:02 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_list		*bubble_sort(t_list	**blist, int is_asc)
+void		cpy_data(t_meta **dest, t_meta *src)
 {
-	int		len;
-	int		i;
-	void	*tmp;
-	t_list	*list;
+	t_meta	*data;
 
-	i = 0;
-	len = ft_lstsize(*blist);
-	while (len)
+	data = *dest;
+	data->mode = src->mode;
+	data->n_links = src->n_links;
+	data->owner = src->owner;
+	data->group = src->group;
+	data->size = src->size;
+	data->m_time = src->m_time;
+	data->name = src->name;
+	//don't forget symlink
+	data->path = src->path;
+}
+
+void		swap_data(t_meta **first, t_meta **second)
+{
+	t_meta	tmp;
+
+	tmp = **first;
+	cpy_data(first, *second);
+	cpy_data(second, &tmp);
+}
+
+t_meta		*bubble_sort(t_meta	**data, int is_asc)
+{
+	t_meta	*f;
+	t_meta	*s;
+
+	f = *data;
+	while (f)
 	{
-		list = *blist;
-		while (i < len)
+		s = *data;
+		while (s->next)
 		{
-			tmp = list->content;
-			if (is_asc ? ft_strcmp(list->content, list->next->content) > 0
-					: ft_strcmp(list->content, list->next->content) < 0)
-			{
-				list->content = list->next->content;
-				list->next->content = tmp;
-			}
-			list = list->next;
-			i++;
+			if (is_asc ? ft_strcmp(s->name, s->next->name) > 0
+					: ft_strcmp(s->name, s->next->name) < 0)
+				swap_data(&s, &s->next);
+			s = s->next;
 		}
-		len--;
+		f = f->next;
 	}
-	return (list);
+	return (*data);
 }

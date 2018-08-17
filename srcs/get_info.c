@@ -6,13 +6,13 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 15:29:21 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/16 16:23:31 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/16 20:50:58 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_meta		*get_metadata(struct stat st, t_meta *data, t_options opts)
+t_meta		*get_metadata(struct stat st, t_meta *data, int opts)
 {
 	data = get_mode(st, data);
 	data->n_links = st.st_nlink;
