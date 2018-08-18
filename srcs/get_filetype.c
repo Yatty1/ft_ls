@@ -6,13 +6,13 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 13:31:37 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 11:14:12 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 14:11:06 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-char		get_filetype(struct stat st)
+static char		get_filetype(struct stat st)
 {
 	if (MATCH(st.st_mode, S_IFLNK))
 		return ('l');
@@ -31,29 +31,51 @@ char		get_filetype(struct stat st)
 	return (' ');
 }
 
-char		get_execpermit(struct stat st)
+static char		get_usrexepermit(struct stat st)
 {
-	if (MATCH(st.st_mode, (S_IXUSR | S_IXGRP | S_IXOTH)))
-		return ('x');
-	if (MATCH(st.st_mode, (S_ISUID | S_ISGID)))
+	if (MATCH(st.st_mode, (S_IXUSR | S_ISUID)))
 		return ('s');
-	if (MATCH(st.st_mode, S_ISVTX))
-		return ('t');
+	if (MATCH(st.st_mode, (S_ISUID)))
+		return ('S');
+	if (MATCH(st.st_mode, S_IXUSR))
+		return ('x');
 	return ('-');
 }
 
-t_meta		*get_mode(struct stat st, t_meta *data)
+static char		get_grpexepermit(struct stat st)
+{
+	if (MATCH(st.st_mode, (S_IXGRP | S_ISGID)))
+		return ('s');
+	if (MATCH(st.st_mode, (S_ISGID)))
+		return ('S');
+	if (MATCH(st.st_mode, S_IXGRP))
+		return ('x');
+	return ('-');
+}
+
+static char		get_othexepermit(struct stat st)
+{
+	if (MATCH(st.st_mode, (S_IXOTH | S_ISVTX)))
+		return ('t');
+	if (MATCH(st.st_mode, (S_ISVTX)))
+		return ('T');
+	if (MATCH(st.st_mode, S_IXOTH))
+		return ('x');
+	return ('-');
+}
+
+t_meta			*get_mode(struct stat st, t_meta *data)
 {
 	data->mode = ft_strnew(10);
 	data->mode[0] = get_filetype(st);
 	data->mode[1] = MATCH(st.st_mode, S_IRUSR) ? 'r' : '-';
 	data->mode[2] = MATCH(st.st_mode, S_IWUSR) ? 'w' : '-';
-	data->mode[3] = get_execpermit(st);
+	data->mode[3] = get_usrexepermit(st);
 	data->mode[4] = MATCH(st.st_mode, S_IRGRP) ? 'r' : '-';
 	data->mode[5] = MATCH(st.st_mode, S_IWGRP) ? 'w' : '-';
-	data->mode[6] = get_execpermit(st);
+	data->mode[6] = get_grpexepermit(st);
 	data->mode[7] = MATCH(st.st_mode, S_IROTH) ? 'r' : '-';
 	data->mode[8] = MATCH(st.st_mode, S_IWOTH) ? 'w' : '-';
-	data->mode[9] = get_execpermit(st);
+	data->mode[9] = get_othexepermit(st);
 	return (data);
 }

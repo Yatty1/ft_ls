@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:26 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 12:49:55 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 14:13:30 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ DIR		*open_dir(char *dirname)
 
 	if (!(dir = opendir(dirname)))
 	{
-		ft_printf("./ft_ls: %s %s", dirname, strerror(errno));
+		ft_printf("./ft_ls: %s %s\n", dirname, strerror(errno));
 		return (NULL);
 	}
 	return (dir);
@@ -69,8 +69,7 @@ void	get_file(char *filename, int opts)
 		if (MATCH(opts, LL))
 		{
 			data = get_metadata(data, opts);
-			ft_printf("%s  %d %s  %s  %d %s %s\n", data->mode, data->n_links,
-					data->owner, data->group, data->size, ft_strsub(ctime(&data->m_time), 4, 12), filename);
+			print_longformat(data, 1, 1);
 		}
 		else
 			ft_putendl(filename);

@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:37 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 12:49:45 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 14:46:08 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,5 @@ void			illegal_option(char c);
 
 t_meta			*get_metadata(t_meta *data, int opts);
 t_meta			*get_mode(struct stat st, t_meta *data);
-char			get_filetype(struct stat st);
-char			get_execpermit(struct stat st);
 
 #endif
