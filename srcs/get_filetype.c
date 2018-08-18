@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 13:31:37 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/17 13:09:56 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 11:14:12 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,3 @@ t_meta		*get_mode(struct stat st, t_meta *data)
 	data->mode[9] = get_execpermit(st);
 	return (data);
 }
-

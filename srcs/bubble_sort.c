@@ -6,13 +6,13 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 16:29:38 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/17 12:49:14 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 10:27:24 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		cpy_data(t_meta **dest, t_meta *src)
+static void		cpy_data(t_meta **dest, t_meta *src)
 {
 	t_meta	*data;
 
@@ -28,7 +28,7 @@ void		cpy_data(t_meta **dest, t_meta *src)
 	data->path = src->path;
 }
 
-void		swap_data(t_meta **first, t_meta **second)
+static void		swap_data(t_meta **first, t_meta **second)
 {
 	t_meta	tmp;
 
@@ -37,7 +37,7 @@ void		swap_data(t_meta **first, t_meta **second)
 	cpy_data(second, &tmp);
 }
 
-t_meta		*time_sort(t_meta **data)
+t_meta			*time_sort(t_meta **data)
 {
 	t_meta	*f;
 	t_meta	*s;
@@ -57,7 +57,7 @@ t_meta		*time_sort(t_meta **data)
 	return (*data);
 }
 
-t_meta		*bubble_sort(t_meta	**data, int is_asc)
+t_meta			*bubble_sort(t_meta	**data, int is_asc)
 {
 	t_meta	*f;
 	t_meta	*s;

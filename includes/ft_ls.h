@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:37 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/17 13:37:26 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 11:11:33 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct	s_meta
 	char			*group;
 	off_t			size;
 	time_t			m_time;
+	char			*date;
+	char			*time;
 	char			*name;
 	char			*symlink;
 	char			*path;
@@ -51,7 +53,6 @@ typedef struct	s_meta
 }				t_meta;
 
 char			**check_option(int *argc, char **argv, int *opts);
-
 void			create_data(t_meta **data, char *name, char *path);
 
 /*

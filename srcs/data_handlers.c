@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 11:24:44 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/17 13:38:09 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 11:18:03 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int		count_digit(int size)
 	return (i);
 }
 
-static int		get_size_wd(t_meta *data)
+static int		get_size_wd(t_meta *data, int opts)
 {
 	int		max;
 	int		tmp;
@@ -33,6 +33,11 @@ static int		get_size_wd(t_meta *data)
 	max = count_digit(data->size);
 	while (data)
 	{
+		if (data->name[0] == '.' && !MATCH(opts, LA))
+		{
+			data = data->next;
+			continue ;
+		}
 		if ((tmp = count_digit(data->size)) > max)
 			max = tmp;
 		data = data->next;
@@ -40,7 +45,7 @@ static int		get_size_wd(t_meta *data)
 	return (max);
 }
 
-static int		get_link_wd(t_meta *data)
+static int		get_link_wd(t_meta *data, int opts)
 {
 	int		max;
 	int		tmp;
@@ -48,6 +53,11 @@ static int		get_link_wd(t_meta *data)
 	max = count_digit(data->n_links);
 	while (data)
 	{
+		if (data->name[0] == '.' && !MATCH(opts, LA))
+		{
+			data = data->next;
+			continue ;
+		}
 		if ((tmp = count_digit(data->n_links)) > max)
 			max = tmp;
 		data = data->next;
@@ -55,7 +65,7 @@ static int		get_link_wd(t_meta *data)
 	return (max);
 }
 
-static int		get_sizelinkblock(t_meta **data)
+static int		get_sizelinkblock(t_meta **data, int opts)
 {
 	struct stat	st;
 	t_meta		*d;
@@ -65,10 +75,11 @@ static int		get_sizelinkblock(t_meta **data)
 	blocks = 0;
 	while (d)
 	{
-		stat(d->path, &st);
+		lstat(d->path, &st);
 		d->size = st.st_size;
 		d->n_links = st.st_nlink;
-		blocks += st.st_blocks;
+		blocks = d->name[0] == '.' && !MATCH(opts, LA) ?
+			blocks : blocks + st.st_blocks;
 		d = d->next;
 	}
 	return (blocks);
@@ -81,10 +92,10 @@ void		lformat_handler(t_meta **data, int opts)
 	int		blocks;
 	t_meta	*d;
 
-	blocks = get_sizelinkblock(data);
+	blocks = get_sizelinkblock(data, opts);
 	d = *data;
-	width_size = get_size_wd(d);
-	width_link = get_link_wd(d);
+	width_size = get_size_wd(d, opts);
+	width_link = get_link_wd(d, opts);
 	ft_putstr("total ");
 	ft_putnbr(blocks);
 	ft_putchar('\n');

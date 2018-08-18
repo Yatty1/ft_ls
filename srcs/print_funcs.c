@@ -6,33 +6,29 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 22:49:14 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/17 13:37:34 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 10:46:41 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-char		*time_determine(time_t t)
+static void		time_determine(t_meta **data)
 {
 	time_t	curr;
 	char	*str;
 
 	time(&curr);
-	if ((curr - t) < HALF_A_YEAR)
-		str = ft_strsub(ctime(&t), 4, 12);
+	str = ctime(&(*data)->m_time);
+	(*data)->date = ft_strsub(str, 4, 6);
+	if ((curr - (*data)->m_time) < HALF_A_YEAR)
+		(*data)->time = ft_strsub(str, 11, 5);
 	else
-	{
-		str = ft_strsub(ctime(&t), 4, 7);
-		str = ft_strjoinfree(str, ft_strsub(ctime(&t), 20, 4));
-	}
-	return (str);
+		(*data)->time = ft_strsub(str, 20, 4);
 }
 
 
-void		print_longformat(t_meta *data, int width_size, int width_link)
+void			print_longformat(t_meta *data, int width_size, int width_link)
 {
-	char	*time;
-
 	/*
 	ft_putstr(data->mode);
 	ft_putstr("  ");
@@ -49,22 +45,21 @@ void		print_longformat(t_meta *data, int width_size, int width_link)
 	ft_putchar(' ');
 	ft_putendl(data->name);
 	*/
-	time = time_determine(data->m_time);
+	time_determine(&data);
 	if (data->mode[0] == 'l')
 	{
 
-		ft_printf("%s  %*d %s  %s  %*d %s %s -> %s\n", data->mode, width_link, data->n_links,
-			data->owner, data->group, width_size, data->size, time, data->name, data->symlink);
+		ft_printf("%s  %*d %s  %s  %*d %s %*s %s -> %s\n", data->mode, width_link, data->n_links,
+			data->owner, data->group, width_size, data->size, data->date, 5, data->time, data->name, data->symlink);
 	}
 	else
 	{
-		ft_printf("%s  %*d %s  %s  %*d %s %s\n", data->mode, width_link, data->n_links,
-			data->owner, data->group, width_size, data->size, time, data->name);
+		ft_printf("%s  %*d %s  %s  %*d %s %*s %s\n", data->mode, width_link, data->n_links,
+			data->owner, data->group, width_size, data->size, data->date, 5, data->time, data->name);
 	}
-	ft_strdel(&time);
 }
 
-void		print_dircontent(t_meta **data, int opts)
+void			print_dircontent(t_meta **data, int opts)
 {
 	t_meta		*d;
 	struct stat	st;
@@ -82,7 +77,4 @@ void		print_dircontent(t_meta **data, int opts)
 	}
 	if (MATCH(opts, LL))
 		lformat_handler(data, opts);
-//	else if (MATCH(opts, LT))
-//		time_handler(data, opts);
-//	if (MATCH(opts, CR) && !MATCH(opts, LL))
 }
