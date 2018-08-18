@@ -29,7 +29,7 @@ char		*time_determine(time_t t)
 }
 
 
-void		print_longformat(t_meta *data, int width)
+void		print_longformat(t_meta *data, int width_size, int width_link)
 {
 	char	*time;
 
@@ -50,8 +50,8 @@ void		print_longformat(t_meta *data, int width)
 	ft_putendl(data->name);
 	*/
 	time = time_determine(data->m_time);
-	ft_printf("%s  %d %s  %s  %*d %s %s\n", data->mode, data->n_links,
-			data->owner, data->group, width, data->size, time, data->name);
+	ft_printf("%s  %*d %s  %s  %*d %s %s\n", data->mode, width_link, data->n_links,
+			data->owner, data->group, width_size, data->size, time, data->name);
 	ft_strdel(&time);
 }
 
@@ -73,7 +73,7 @@ void		print_dircontent(t_meta **data, int opts)
 	}
 	if (MATCH(opts, LL))
 		lformat_handler(data, opts);
-	else if (MATCH(opts, LT))
-		time_handler(data, opts);
+//	else if (MATCH(opts, LT))
+//		time_handler(data, opts);
 //	if (MATCH(opts, CR) && !MATCH(opts, LL))
 }

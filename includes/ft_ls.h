@@ -40,7 +40,7 @@ typedef struct	s_meta
 	unsigned int	n_links;
 	char			*owner;
 	char			*group;
-	int				size;
+	off_t			size;
 	time_t			m_time;
 	char			*name;
 	char			*symlink;
@@ -56,9 +56,11 @@ void			create_data(t_meta **data, char *name, char *path);
 ** sorting funcs
 */
 
+t_meta			*dispatch_sort(t_meta **data, int opts);
 t_meta			*bubble_sort(t_meta **data, int is_asc);
 void			quick_sort(char ***input, int left, int right, int is_asc);
 char			**sort_content(t_list *list, int is_asc);
+t_meta			*time_sort(t_meta **data);
 
 /*
 ** handlers
@@ -71,7 +73,7 @@ void			time_handler(t_meta **data, int opts);
 ** print funcs
 */
 
-void			print_longformat(t_meta *data, int width);
+void			print_longformat(t_meta *data, int width_size, int width_link);
 void			print_dircontent(t_meta **data, int opts);
 
 /*

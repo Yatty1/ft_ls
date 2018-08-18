@@ -24,7 +24,7 @@ INCDIR		:= includes
 LS			:= ft_ls
 LSSRC		:= $(addprefix $(SRCDIR)/, ft_ls.c check_option.c sort_funcs.c \
 						error_exit.c get_info.c get_filetype.c bubble_sort.c \
-						data_utils.c print_funcs.c data_handlers.c)
+						data_utils.c print_funcs.c data_handlers.c sort_handler.c)
 
 #colors
 COM_COLOR	:= \033[0;34m

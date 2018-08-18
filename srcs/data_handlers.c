@@ -12,7 +12,7 @@
 
 #include "ft_ls.h"
 
-static int	count_digit(long size)
+static int	count_digit(int size)
 {
 	int		i;
 
@@ -25,7 +25,7 @@ static int	count_digit(long size)
 	return (i);
 }
 
-static int max(t_meta *data)
+static int	get_size_wd(t_meta *data)
 {
 	int		max;
 	int		tmp;
@@ -40,34 +40,55 @@ static int max(t_meta *data)
 	return (max);
 }
 
-void		lformat_handler(t_meta **data, int opts)
+static int	get_link_wd(t_meta *data)
 {
-	int		width;
+	int		max;
+	int		tmp;
 
-	width = max(*data);
-	while (*data)
+	max = count_digit(data->n_links);
+	while (data)
 	{
-		if ((*data)->name[0] == '.' && !MATCH(opts, LA))
-		{
-			(*data) = (*data)->next;
-			continue ;
-		}
-		*data = get_metadata(*data, opts);
-		print_longformat(*data, width);
-		(*data) = (*data)->next;
+		if ((tmp = count_digit(data->n_links)) > max)
+			max = tmp;
+		data = data->next;
 	}
+	return (max);
 }
 
-void		time_handler(t_meta **data, int opts)
+t_meta		*get_size_link(t_meta *data)
 {
-	while (*data)
+	struct stat	st;
+	t_meta		*d;
+
+	d = data;
+	while (d)
 	{
-		if ((*data)->name[0] == '.' && !MATCH(opts, LA))
+		stat(d->path, &st);
+		d->size = st.st_size;
+		d->n_links = st.st_nlink;
+		d = d->next;
+	}
+	return (data);
+}
+
+void		lformat_handler(t_meta **data, int opts)
+{
+	int		width_size;
+	int		width_link;
+	t_meta	*d;
+
+	d = get_size_link(*data);
+	width_size = get_size_wd(d);
+	width_link = get_link_wd(d);
+	while (d)
+	{
+		if (d->name[0] == '.' && !MATCH(opts, LA))
 		{
-			(*data) = (*data)->next;
+			d = d->next;
 			continue ;
 		}
-		ft_putendl((*data)->name);
-		(*data) = (*data)->next;
+		d = get_metadata(d, opts);
+		print_longformat(d, width_size, width_link);
+		d = d->next;
 	}
 }

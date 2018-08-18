@@ -25,6 +25,7 @@ char	**check_option(int *argc, char **argv, int *opts)
 	int		i;
 
 	i = 1;
+	*opts = 0;
 	if (*argc < 2 || argv[1][0] != '-')
 		return (argv);
 	while (argv[1][i])
