@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:26 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 14:13:30 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 14:57:09 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ DIR		*open_dir(char *dirname)
 
 	if (!(dir = opendir(dirname)))
 	{
-		ft_printf("./ft_ls: %s %s\n", dirname, strerror(errno));
+		open_error(dirname);
 		return (NULL);
 	}
 	return (dir);
@@ -63,9 +63,9 @@ void	get_file(char *filename, int opts)
 {
 	t_meta			*data;
 
-	create_data(&data, filename, filename);
 	if (errno == ENOTDIR)
 	{
+		create_data(&data, filename, filename);
 		if (MATCH(opts, LL))
 		{
 			data = get_metadata(data, opts);
@@ -74,6 +74,8 @@ void	get_file(char *filename, int opts)
 		else
 			ft_putendl(filename);
 	}
+	else
+		open_error(filename);
 }
 
 int		main(int argc, char **argv)

@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:37 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 14:46:08 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 14:51:17 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void			print_dircontent(t_meta **data, int opts);
 ** error handlers
 */
 void			illegal_option(char c);
+void			open_error(char *filename);
 
 /*
 ** get info of files and dirs
