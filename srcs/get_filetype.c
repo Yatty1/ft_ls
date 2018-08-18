@@ -14,19 +14,19 @@
 
 char		get_filetype(struct stat st)
 {
+	if (MATCH(st.st_mode, S_IFLNK))
+		return ('l');
 	if (MATCH(st.st_mode, S_IFREG))
 		return ('-');
-	else if (MATCH(st.st_mode, S_IFDIR))
+	if (MATCH(st.st_mode, S_IFDIR))
 		return ('d');
-	else if (MATCH(st.st_mode, S_IFCHR))
+	if (MATCH(st.st_mode, S_IFCHR))
 		return ('c');
-	else if (MATCH(st.st_mode, S_IFBLK))
+	if (MATCH(st.st_mode, S_IFBLK))
 		return ('b');
-	else if (MATCH(st.st_mode, S_IFIFO))
+	if (MATCH(st.st_mode, S_IFIFO))
 		return ('p');
-	else if (MATCH(st.st_mode, S_IFLNK))
-		return ('l');
-	else if (MATCH(st.st_mode, S_IFSOCK))
+	if (MATCH(st.st_mode, S_IFSOCK))
 		return ('s');
 	return (' ');
 }

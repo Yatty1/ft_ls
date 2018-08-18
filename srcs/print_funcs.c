@@ -50,8 +50,17 @@ void		print_longformat(t_meta *data, int width_size, int width_link)
 	ft_putendl(data->name);
 	*/
 	time = time_determine(data->m_time);
-	ft_printf("%s  %*d %s  %s  %*d %s %s\n", data->mode, width_link, data->n_links,
+	if (data->mode[0] == 'l')
+	{
+
+		ft_printf("%s  %*d %s  %s  %*d %s %s -> %s\n", data->mode, width_link, data->n_links,
+			data->owner, data->group, width_size, data->size, time, data->name, data->symlink);
+	}
+	else
+	{
+		ft_printf("%s  %*d %s  %s  %*d %s %s\n", data->mode, width_link, data->n_links,
 			data->owner, data->group, width_size, data->size, time, data->name);
+	}
 	ft_strdel(&time);
 }
 

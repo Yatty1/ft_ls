@@ -20,11 +20,13 @@
 # include <string.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <sys/xattr.h>
 # include <time.h>
 # include <errno.h>
 # include <pwd.h>
 # include <grp.h>
 # include <uuid/uuid.h>
+
 
 # define MATCH(value, flag) ((value & flag) == flag)
 # define HALF_A_YEAR 15778463
