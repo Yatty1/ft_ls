@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 22:49:14 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 10:46:41 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 12:27:49 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,18 @@ static void		time_determine(t_meta **data)
 
 void			print_longformat(t_meta *data, int width_size, int width_link)
 {
-	/*
-	ft_putstr(data->mode);
-	ft_putstr("  ");
-	ft_putnbr((int)data->n_links);
-	ft_putstr(" ");
-	ft_putstr(data->owner);
-	ft_putstr(" ");
-	ft_putstr(data->group);
-	ft_putstr("  ");
-	ft_putnbr((int)data->size);
-	ft_putstr(" ");
-	time = time_determine(data->m_time);
-	ft_putstr(time);
-	ft_putchar(' ');
-	ft_putendl(data->name);
-	*/
 	time_determine(&data);
 	if (data->mode[0] == 'l')
 	{
 
 		ft_printf("%s  %*d %s  %s  %*d %s %*s %s -> %s\n", data->mode, width_link, data->n_links,
 			data->owner, data->group, width_size, data->size, data->date, 5, data->time, data->name, data->symlink);
+	}
+	else if (data->mode[0] == 'c' || data->mode[0] == 'b')
+	{
+
+		ft_printf("%s  %*d %s  %s  %*d, %*d %s %*s %s\n", data->mode, width_link, data->n_links,
+			data->owner, data->group, width_size, data->major, width_size, data->minor, data->date, 5, data->time, data->name);
 	}
 	else
 	{

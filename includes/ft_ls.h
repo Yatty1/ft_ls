@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:37 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 11:11:33 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 12:49:45 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 
 
 # define MATCH(value, flag) ((value & flag) == flag)
+# define MAJOR(dev) ((int)(((unsigned int) (dev) >> 24) & 0xff))
+# define MINOR(dev) ((int)((dev) & 0xff))
 # define HALF_A_YEAR 15778463
 # define LL 1
 # define LR 2
@@ -46,6 +48,8 @@ typedef struct	s_meta
 	time_t			m_time;
 	char			*date;
 	char			*time;
+	int				major;
+	int				minor;
 	char			*name;
 	char			*symlink;
 	char			*path;
@@ -61,8 +65,6 @@ void			create_data(t_meta **data, char *name, char *path);
 
 t_meta			*dispatch_sort(t_meta **data, int opts);
 t_meta			*bubble_sort(t_meta **data, int is_asc);
-void			quick_sort(char ***input, int left, int right, int is_asc);
-char			**sort_content(t_list *list, int is_asc);
 t_meta			*time_sort(t_meta **data);
 
 /*
@@ -82,7 +84,6 @@ void			print_dircontent(t_meta **data, int opts);
 /*
 ** error handlers
 */
-
 void			illegal_option(char c);
 
 /*

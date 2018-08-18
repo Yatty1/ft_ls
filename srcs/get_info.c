@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 15:29:21 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/17 13:11:03 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 12:35:54 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,7 @@ t_meta			*get_metadata(t_meta *data, int opts)
 	data->size = st.st_size;
 	data->m_time = st.st_mtime;
 	data->symlink = get_symlink(st, data);
+	data->major = MAJOR(st.st_rdev);
+	data->minor = MINOR(st.st_rdev);
 	return (data);
 }

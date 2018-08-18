@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:26 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 11:14:36 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 12:49:55 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	openread_dir(char *dirname, int opts)
 	{
 		stat(data->path, &st);
 		if (ft_strequ(".", data->name) || ft_strequ("..", data->name)
-				|| !MATCH(st.st_mode, S_IFDIR))
+				|| !MATCH(st.st_mode, S_IFDIR) || (data->name[0] == '.' && !MATCH(opts, LA)))
 		{
 			data = data->next;
 			continue ;
