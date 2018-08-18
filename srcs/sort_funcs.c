@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 07:48:59 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/16 16:11:25 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/16 22:51:44 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,30 +78,3 @@ char			**sort_content(t_list *list, int is_asc)
 	quick_sort(&input, 0, ft_lstsize(list) - 1, is_asc);
 	return (input);
 }
-
-/*
-int		main()
-{
-	t_list	*list;
-	char	**input;
-
-	list = 0;
-	ft_lstpush(&list, "ddd", 3);
-	ft_lstpush(&list, "aaa", 3);
-	ft_lstpush(&list, "hhh", 3);
-	ft_lstpush(&list, "ccc", 3);
-	ft_lstpush(&list, "ggg", 3);
-	ft_lstpush(&list, "bbb", 3);
-	ft_lstpush(&list, "eee", 3);
-	ft_lstpush(&list, "fff", 3);
-	input = convert_two(list);
-	quick_sort(&input, 0, ft_lstsize(list) - 1);
-	int i = 0;
-	while (i < ft_lstsize(list))
-	{
-		ft_printf("%d: %s\n", i, input[i]);
-		i++;
-	}
-	return (0);
-}
-*/

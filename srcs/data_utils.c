@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_exit.c                                       :+:      :+:    :+:   */
+/*   data_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/16 14:29:35 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 14:57:10 by syamada          ###   ########.fr       */
+/*   Created: 2018/08/16 22:00:07 by syamada           #+#    #+#             */
+/*   Updated: 2018/08/17 11:29:01 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	illegal_option(char c)
+void		create_data(t_meta **data, char *name, char *path)
 {
-	ft_putstr_fd("./ft_ls: illegal option -- ", 2);
-	ft_putchar_fd(c, 2);
-	ft_putendl_fd(" usage: ./ft_ls [arRlt] [file...]", 2);
-	exit(-1);
-}
+	t_meta	*new;
 
-void	open_error(char *filename)
-{
-	ft_putstr_fd("./ft_ls: ", 2);
-	ft_putstr_fd(filename, 2);
-	ft_putchar_fd(' ', 2);
-	ft_putendl_fd(strerror(errno), 2);
+	new = (t_meta *)malloc(sizeof(t_meta));
+	new->name = ft_strdup(name);
+	new->path = ft_strdup(path);
+	new->next = NULL;
+	if (!*data)
+	{
+		*data = new;
+		return ;
+	}
+	new->next = *data;
+	*data = new;
 }

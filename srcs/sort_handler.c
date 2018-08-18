@@ -1,29 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_exit.c                                       :+:      :+:    :+:   */
+/*   sort_handler.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/16 14:29:35 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 14:57:10 by syamada          ###   ########.fr       */
+/*   Created: 2018/08/18 10:33:19 by syamada           #+#    #+#             */
+/*   Updated: 2018/08/18 10:37:34 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	illegal_option(char c)
+static void		get_time(t_meta **data)
 {
-	ft_putstr_fd("./ft_ls: illegal option -- ", 2);
-	ft_putchar_fd(c, 2);
-	ft_putendl_fd(" usage: ./ft_ls [arRlt] [file...]", 2);
-	exit(-1);
+	struct stat	st;
+	t_meta	*d;
+
+	d = *data;
+	while (d)
+	{
+		stat(d->path, &st);
+		d->m_time = st.st_mtime;
+		d = d->next;
+	}
 }
 
-void	open_error(char *filename)
+t_meta			*dispatch_sort(t_meta **data, int opts)
 {
-	ft_putstr_fd("./ft_ls: ", 2);
-	ft_putstr_fd(filename, 2);
-	ft_putchar_fd(' ', 2);
-	ft_putendl_fd(strerror(errno), 2);
+	if (MATCH(opts, LT))
+	{
+		get_time(data);
+		return (time_sort(data));
+	}
+	return (bubble_sort(data, !MATCH(opts, LR)));
 }

@@ -6,19 +6,43 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 15:29:21 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/16 16:23:31 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 14:46:07 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_meta		*get_metadata(struct stat st, t_meta *data, t_options opts)
+static char		*get_symlink(struct stat st, t_meta *data)
 {
+	char	buf[101];
+	int		ret;
+
+	if (MATCH(st.st_mode, S_IFLNK))
+	{
+		ret = readlink(data->path, buf, 100);
+		buf[ret] = '\0';
+		return (ft_strdup(buf));
+	}
+	return (ft_strdup(""));
+}
+
+t_meta			*get_metadata(t_meta *data, int opts)
+{
+	struct stat		st;
+	struct passwd	*pd;
+	struct group	*gr;
+
+	lstat(data->path, &st);
 	data = get_mode(st, data);
 	data->n_links = st.st_nlink;
-	data->owner = getpwuid(st.st_uid)->pw_name;
-	data->group = getgrgid(st.st_gid)->gr_name;
+	data->owner = (pd = getpwuid(st.st_uid)) ?
+			pd->pw_name : ft_ltoa(st.st_uid);
+	data->group = (gr = getgrgid(st.st_gid)) ?
+			gr->gr_name : ft_ltoa(st.st_uid);;
 	data->size = st.st_size;
 	data->m_time = st.st_mtime;
+	data->symlink = get_symlink(st, data);
+	data->major = MAJOR(st.st_rdev);
+	data->minor = MINOR(st.st_rdev);
 	return (data);
 }

@@ -6,85 +6,82 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:26 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/16 16:26:43 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 14:57:09 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	openread_dir(char *dirname, t_options opts)
+DIR		*open_dir(char *dirname)
+{
+	DIR		*dir;
+
+	if (!(dir = opendir(dirname)))
+	{
+		open_error(dirname);
+		return (NULL);
+	}
+	return (dir);
+}
+
+void	openread_dir(char *dirname, int opts)
 {
 	DIR				*dir;
 	struct dirent	*dp;
-	struct stat 	buf;
+	struct stat		st;
 	char			*path;
-	t_list			*dirlist;
-	t_list			*dircontent;
-	char			**input;
+	t_meta			*data;
 
-	dirlist = NULL;
-	dircontent = NULL;
-	if (!(dir = opendir(dirname)))
-	{
-		ft_printf("./ft_ls: %s: %s\n", dirname, strerror(errno));
+	data = NULL;
+	if (!(dir = open_dir(dirname)))
 		return ;
-	}
 	while ((dp = readdir(dir)))
 	{
 		path = ft_strjoin_with(dirname, dp->d_name, '/');
-		stat(path, &buf);
-		if (MATCH(buf.st_mode, S_IFREG))
-			ft_lstadd(&dircontent, ft_lstnew(dp->d_name, ft_strlen(dp->d_name)));
-		else if (MATCH(buf.st_mode, S_IFDIR))
-		{
-			if (dp->d_name[0] == '.')
-			{
-				if (opts.a)
-					ft_lstadd(&dircontent, ft_lstnew(dp->d_name, ft_strlen(dp->d_name)));
-				continue ;
-			}
-			ft_lstadd(&dircontent, ft_lstnew(dp->d_name, ft_strlen(dp->d_name)));
-			ft_lstadd(&dirlist, ft_lstnew(path, ft_strlen(path)));
-		}
+		create_data(&data, dp->d_name, path);
 		ft_strdel(&path);
 	}
-	input = sort_content(dircontent, !opts.r);
-	while (*input)
-		ft_putendl(*input++);
-	while (dirlist && opts.c_r)
+	data = dispatch_sort(&data, opts);
+	print_dircontent(&data, opts);
+	while (data && MATCH(opts, CR))
 	{
-		ft_printf("\n%s:\n", (char *)dirlist->content);
-		openread_dir(dirlist->content, opts);
-		dirlist = dirlist->next;
+		stat(data->path, &st);
+		if (ft_strequ(".", data->name) || ft_strequ("..", data->name)
+				|| !MATCH(st.st_mode, S_IFDIR) || (data->name[0] == '.' && !MATCH(opts, LA)))
+		{
+			data = data->next;
+			continue ;
+		}
+		ft_printf("\n%s:\n", data->path);
+		openread_dir(data->path, opts);
+		data = data->next;
 	}
 	closedir(dir);
 }
 
-void	get_file(char *filename, t_options opts)
+void	get_file(char *filename, int opts)
 {
-	struct stat		buf;
 	t_meta			*data;
 
-	data = (t_meta *)malloc(sizeof(t_meta));
 	if (errno == ENOTDIR)
 	{
-		stat(filename, &buf);
-		if (opts.l)
+		create_data(&data, filename, filename);
+		if (MATCH(opts, LL))
 		{
-			data = get_metadata(buf, data, opts);
-			data->name = filename;
-			ft_printf("%s  %d %s  %s  %d %s %s\n", data->mode, data->n_links,
-					data->owner, data->group, data->size, ft_strsub(ctime(&data->m_time), 4, 12), data->name);
+			data = get_metadata(data, opts);
+			print_longformat(data, 1, 1);
 		}
 		else
 			ft_putendl(filename);
 	}
+	else
+		open_error(filename);
 }
 
 int		main(int argc, char **argv)
 {
 	DIR				*dir;
-	t_options		opts;
+	int				opts;
 	int				i;
 
 	i = 1;
