@@ -12,7 +12,7 @@
 
 #include "ft_ls.h"
 
-static int	count_digit(int size)
+static int		count_digit(int size)
 {
 	int		i;
 
@@ -25,7 +25,7 @@ static int	count_digit(int size)
 	return (i);
 }
 
-static int	get_size_wd(t_meta *data)
+static int		get_size_wd(t_meta *data)
 {
 	int		max;
 	int		tmp;
@@ -40,7 +40,7 @@ static int	get_size_wd(t_meta *data)
 	return (max);
 }
 
-static int	get_link_wd(t_meta *data)
+static int		get_link_wd(t_meta *data)
 {
 	int		max;
 	int		tmp;
@@ -55,31 +55,39 @@ static int	get_link_wd(t_meta *data)
 	return (max);
 }
 
-t_meta		*get_size_link(t_meta *data)
+static int		get_sizelinkblock(t_meta **data)
 {
 	struct stat	st;
 	t_meta		*d;
+	int			blocks;
 
-	d = data;
+	d = *data;
+	blocks = 0;
 	while (d)
 	{
 		stat(d->path, &st);
 		d->size = st.st_size;
 		d->n_links = st.st_nlink;
+		blocks += st.st_blocks;
 		d = d->next;
 	}
-	return (data);
+	return (blocks);
 }
 
 void		lformat_handler(t_meta **data, int opts)
 {
 	int		width_size;
 	int		width_link;
+	int		blocks;
 	t_meta	*d;
 
-	d = get_size_link(*data);
+	blocks = get_sizelinkblock(data);
+	d = *data;
 	width_size = get_size_wd(d);
 	width_link = get_link_wd(d);
+	ft_putstr("total ");
+	ft_putnbr(blocks);
+	ft_putchar('\n');
 	while (d)
 	{
 		if (d->name[0] == '.' && !MATCH(opts, LA))

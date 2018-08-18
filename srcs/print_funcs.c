@@ -70,7 +70,7 @@ void		print_dircontent(t_meta **data, int opts)
 	struct stat	st;
 
 	d = *data;
-	while (d && !(opts & (LL | LT)))
+	while (d && !(opts & LL))
 	{
 		if (d->name[0] == '.' && !MATCH(opts, LA))
 		{

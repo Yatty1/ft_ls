@@ -37,7 +37,7 @@ char	**check_option(int *argc, char **argv, int *opts)
 	*opts |= ft_strchr(argv[1], 'l') ? LL : 0;
 	*opts |= ft_strchr(argv[1], 'r') ?  LR : 0;
 	*opts |= ft_strchr(argv[1], 'R') ?  CR : 0;
-	*opts |= ft_strchr(argv[1], 't') && MATCH(*opts, LR) ?  LT : 0;
+	*opts |= ft_strchr(argv[1], 't') && !MATCH(*opts, LR) ?  LT : 0;
 	*opts |= ft_strchr(argv[1], 'a') ?  LA : 0;
 	if (*opts & (LL | LR | CR | LT | LA))
 	{

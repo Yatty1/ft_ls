@@ -52,7 +52,7 @@ void	openread_dir(char *dirname, int opts)
 			data = data->next;
 			continue ;
 		}
-		ft_putendl(data->path);
+		ft_printf("\n%s:\n", data->path);
 		openread_dir(data->path, opts);
 		data = data->next;
 	}
