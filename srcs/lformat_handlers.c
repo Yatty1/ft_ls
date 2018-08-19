@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/18 14:10:38 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 14:10:42 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 15:41:55 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static int		get_sizelinkblock(t_meta **data, int opts)
 	return (blocks);
 }
 
-void		lformat_handler(t_meta **data, int opts)
+void			lformat_handler(t_meta **data, int opts)
 {
 	int		width_size;
 	int		width_link;

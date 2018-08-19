@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/18 10:33:19 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 10:37:34 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 15:42:25 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void		get_time(t_meta **data)
 {
 	struct stat	st;
-	t_meta	*d;
+	t_meta		*d;
 
 	d = *data;
 	while (d)

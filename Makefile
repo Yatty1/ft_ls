@@ -6,7 +6,7 @@
 #    By: syamada <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/06 21:25:07 by syamada           #+#    #+#              #
-#    Updated: 2018/08/18 14:11:33 by syamada          ###   ########.fr        #
+#    Updated: 2018/08/18 16:03:22 by syamada          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ INCDIR		:= includes
 LS			:= ft_ls
 LSSRC		:= $(addprefix $(SRCDIR)/, ft_ls.c check_option.c sort_funcs.c \
 						error_exit.c get_info.c get_filetype.c bubble_sort.c \
-						data_utils.c print_funcs.c lformat_handlers.c sort_handler.c)
+						data_utils.c print_funcs.c lformat_handlers.c \
+						sort_handler.c openread.c)
 
 #colors
 COM_COLOR	:= \033[0;34m

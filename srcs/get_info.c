@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 15:29:21 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 14:46:07 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 16:58:59 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,14 @@ t_meta			*get_metadata(t_meta *data, int opts)
 	lstat(data->path, &st);
 	data = get_mode(st, data);
 	data->n_links = st.st_nlink;
-	data->owner = (pd = getpwuid(st.st_uid)) ?
-			pd->pw_name : ft_ltoa(st.st_uid);
-	data->group = (gr = getgrgid(st.st_gid)) ?
-			gr->gr_name : ft_ltoa(st.st_uid);;
+	if (!(pd = getpwuid(st.st_uid)))
+		data->owner = ft_strdup(pd->pw_name);
+	else
+		data->owner = ft_ltoa(st.st_uid);
+	if (!(gr = getgrgid(st.st_gid)))
+		data->group = ft_strdup(gr->gr_name);
+	else
+		data->group = ft_ltoa(st.st_uid);
 	data->size = st.st_size;
 	data->m_time = st.st_mtime;
 	data->symlink = get_symlink(st, data);
