@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 22:49:14 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 21:04:29 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/19 11:50:25 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void			print_longformat(t_meta *data, int width_size, int width_link)
 void			print_dircontent(t_meta **data, int opts)
 {
 	t_meta		*d;
-	struct stat	st;
 
 	d = *data;
 	while (d && !(opts & LL))

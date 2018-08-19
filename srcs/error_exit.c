@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 14:29:35 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 17:17:24 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/19 11:41:30 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,4 @@ void	open_error(char *filename)
 	ft_putstr_fd(filename, 2);
 	ft_putchar_fd(' ', 2);
 	ft_putendl_fd(strerror(errno), 2);
-	ft_strdel(&filename);
 }

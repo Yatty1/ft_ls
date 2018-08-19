@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:37 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 21:26:57 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/19 11:50:26 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define CR 4
 # define LT 8
 # define LA 16
+# define CG 32
 
 typedef struct	s_meta
 {
@@ -59,7 +60,7 @@ typedef struct	s_meta
 char			**check_option(int *argc, char **argv, int *opts);
 
 /*
-**
+** data utils
 */
 
 void			create_data(t_meta **data, char *name, char *path);
@@ -81,7 +82,7 @@ void			get_file(char *filename, int opts);
 t_meta			*dispatch_sort(t_meta **data, int opts);
 t_meta			*bubble_sort(t_meta **data, int is_asc);
 t_meta			*time_sort(t_meta **data);
-void			quick_sort(char ***input, int left, int right, int is_asc);
+void			quick_sort(char **input, int left, int right, int is_asc);
 
 /*
 ** handlers

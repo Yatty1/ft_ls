@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/18 15:56:50 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 22:01:13 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/19 11:50:23 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,6 @@ static void		recursiveopen(t_meta *data, int opts)
 		data = data->next;
 	}
 }
-void		ft_datasize(t_meta *data)
-{
-	int		i;
-
-	i = 0;
-	while (data)
-	{
-		i++;
-		data = data->next;
-	}
-	ft_printf("size: %d\n", i);
-}
 
 void			openread_dir(char *dirname, int opts)
 {
@@ -75,7 +63,7 @@ void			openread_dir(char *dirname, int opts)
 	}
 	data = dispatch_sort(&data, opts);
 	print_dircontent(&data, opts);
-	//recursiveopen(data, opts);
+	recursiveopen(data, opts);
 	delete_alldata(&data, opts);
 	closedir(dir);
 }

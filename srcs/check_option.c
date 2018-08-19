@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/12 14:48:25 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 15:39:51 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/19 11:26:57 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ char	**check_option(int *argc, char **argv, int *opts)
 	*opts |= ft_strchr(argv[1], 'R') ? CR : 0;
 	*opts |= ft_strchr(argv[1], 't') && !MATCH(*opts, LR) ? LT : 0;
 	*opts |= ft_strchr(argv[1], 'a') ? LA : 0;
+	*opts |= ft_strchr(argv[1], 'G') ? LA : 0;
 	if (*opts & (LL | LR | CR | LT | LA))
 	{
 		argv += 1;
