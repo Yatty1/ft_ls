@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/18 15:56:50 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 21:26:19 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 22:01:13 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static DIR		*open_dir(char *dirname)
 static void		recursiveopen(t_meta *data, int opts)
 {
 	struct stat st;
+	char		*dirname;
 
 	while (data && MATCH(opts, CR))
 	{
@@ -72,9 +73,8 @@ void			openread_dir(char *dirname, int opts)
 		create_data(&data, dp->d_name, path);
 		ft_strdel(&path);
 	}
-	ft_datasize(data);
-	//data = dispatch_sort(&data, opts);
-	//print_dircontent(&data, opts);
+	data = dispatch_sort(&data, opts);
+	print_dircontent(&data, opts);
 	//recursiveopen(data, opts);
 	delete_alldata(&data, opts);
 	closedir(dir);
@@ -87,16 +87,15 @@ void			get_file(char *filename, int opts)
 	data = NULL;
 	if (errno == ENOTDIR)
 	{
-		create_data(&data, filename, filename);
 		if (MATCH(opts, LL))
 		{
+			create_data(&data, filename, filename);
 			data = get_metadata(data, opts);
 			print_longformat(data, 1, 1);
 			delete_data(&data, opts);
 		}
 		else
 			ft_putendl(filename);
-		ft_strdel(&filename);
 	}
 	else
 		open_error(filename);
