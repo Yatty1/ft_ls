@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:26 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 17:15:59 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 21:25:16 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int				main(int argc, char **argv)
 	input[j] = 0;
 	quick_sort(&input, 0, argc - 2, !MATCH(opts, LR));
 	process_input(input, opts, argc);
-	free(input);
+	delete_input(input);
 	while (1);
 	return (0);
 }

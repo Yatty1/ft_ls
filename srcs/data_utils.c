@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 22:00:07 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 17:12:49 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 21:35:00 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void		create_data(t_meta **data, char *name, char *path)
 	new->owner = NULL;
 	new->group = NULL;
 	new->date = NULL;
+	new->time = NULL;
 	new->symlink = NULL;
 	new->next = NULL;
 	if (!*data)
@@ -36,37 +37,50 @@ void		create_data(t_meta **data, char *name, char *path)
 
 void		delete_data(t_meta **data, int opts)
 {
-	t_meta	*d;
+	printf("mode: %s\n", (*data)->mode);
+	ft_strdel(&(*data)->mode);
+	printf("owner: %s\n", (*data)->owner);
+	ft_strdel(&(*data)->owner);
+	printf("group: %s\n", (*data)->group);
+	ft_strdel(&(*data)->group);
+	printf("date: %s\n", (*data)->date);
+	ft_strdel(&(*data)->date);
+	printf("time: %s\n", (*data)->time);
+	ft_strdel(&(*data)->time);
+	printf("name: %s\n", (*data)->name);
+	ft_strdel(&(*data)->name);
+	printf("symlink: %s\n", (*data)->symlink);
+	ft_strdel(&(*data)->symlink);
+	printf("path: %s\n", (*data)->path);
+	ft_strdel(&(*data)->path);
+	free(*data);
+	*data = NULL;
+}
 
-	d = *data;
-	if (d->name[0] == '.' && !MATCH(opts, LA))
-	{
-		ft_strdel(&d->name);
-		ft_strdel(&d->path);
-		return ;
-	}
-	ft_strdel(&d->mode);
-	ft_strdel(&d->owner);
-	ft_strdel(&d->group);
-	ft_strdel(&d->date);
-	ft_strdel(&d->time);
-	ft_strdel(&d->name);
-	ft_strdel(&d->symlink);
-	ft_strdel(&d->path);
+void		delete_input(char **input)
+{
+	int		i;
+
+	i = 0;
+	while (input[i])
+		ft_strdel(&input[i++]);
+	free(input);
 }
 
 void		delete_alldata(t_meta **data, int opts)
 {
 	t_meta	*d;
 	t_meta	*tmp;
+	int		i;
 
 	d = *data;
+	i = 0;
 	while (d)
 	{
+		tmp = d->next;
 		delete_data(&d, opts);
-		tmp = d;
-		d = d->next;
-		free(tmp);
+		d = tmp;
+		printf("i: %d deleted\n", i++);
 	}
 	*data = NULL;
 }

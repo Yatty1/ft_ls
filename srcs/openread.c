@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/18 15:56:50 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 17:17:33 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 21:26:19 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,7 @@ static DIR		*open_dir(char *dirname)
 static void		recursiveopen(t_meta *data, int opts)
 {
 	struct stat st;
-	t_meta		*tmp;
 
-	tmp = NULL;
 	while (data && MATCH(opts, CR))
 	{
 		stat(data->path, &st);
@@ -44,6 +42,18 @@ static void		recursiveopen(t_meta *data, int opts)
 		openread_dir(data->path, opts);
 		data = data->next;
 	}
+}
+void		ft_datasize(t_meta *data)
+{
+	int		i;
+
+	i = 0;
+	while (data)
+	{
+		i++;
+		data = data->next;
+	}
+	ft_printf("size: %d\n", i);
 }
 
 void			openread_dir(char *dirname, int opts)
@@ -62,11 +72,11 @@ void			openread_dir(char *dirname, int opts)
 		create_data(&data, dp->d_name, path);
 		ft_strdel(&path);
 	}
-	data = dispatch_sort(&data, opts);
-	print_dircontent(&data, opts);
-	recursiveopen(data, opts);
+	ft_datasize(data);
+	//data = dispatch_sort(&data, opts);
+	//print_dircontent(&data, opts);
+	//recursiveopen(data, opts);
 	delete_alldata(&data, opts);
-	ft_strdel(&dirname);
 	closedir(dir);
 }
 
@@ -86,6 +96,7 @@ void			get_file(char *filename, int opts)
 		}
 		else
 			ft_putendl(filename);
+		ft_strdel(&filename);
 	}
 	else
 		open_error(filename);

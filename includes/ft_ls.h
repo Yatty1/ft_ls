@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:37 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 16:59:00 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/18 21:26:57 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ char			**check_option(int *argc, char **argv, int *opts);
 void			create_data(t_meta **data, char *name, char *path);
 void			delete_data(t_meta **data, int opts);
 void			delete_alldata(t_meta **data, int opts);
+void			delete_input(char **input);
 
 /*
 ** openread
