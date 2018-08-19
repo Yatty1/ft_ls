@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 22:00:07 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/19 11:50:24 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/19 16:24:14 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,33 +37,24 @@ void		create_data(t_meta **data, char *name, char *path)
 
 void		delete_data(t_meta **data, int opts)
 {
-	printf("mode: %s\n", (*data)->mode);
-  ft_strdel(&(*data)->mode);
-	printf("owner: %s\n", (*data)->owner);
-  ft_strdel(&(*data)->owner);
-	printf("group: %s\n", (*data)->group);
-  ft_strdel(&(*data)->group);
-	printf("date: %s\n", (*data)->date);
-  ft_strdel(&(*data)->date);
-	printf("time: %s\n", (*data)->time);
-  ft_strdel(&(*data)->time);
-	printf("name: %s\n", (*data)->name);
-  ft_strdel(&(*data)->name);
-	printf("symlink: %s\n", (*data)->symlink);
-  ft_strdel(&(*data)->symlink);
-	printf("path: %s\n", (*data)->path);
+//	printf("mode: %s\n", (*data)->mode);
+	ft_strdel(&(*data)->mode);
+//	printf("owner: %s\n", (*data)->owner);
+	ft_strdel(&(*data)->owner);
+//	printf("group: %s\n", (*data)->group);
+	ft_strdel(&(*data)->group);
+//	printf("date: %s\n", (*data)->date);
+	ft_strdel(&(*data)->date);
+//	printf("time: %s\n", (*data)->time);
+	ft_strdel(&(*data)->time);
+//	printf("name: %s\n", (*data)->name);
+	ft_strdel(&(*data)->name);
+//	printf("symlink: %s\n", (*data)->symlink);
+	ft_strdel(&(*data)->symlink);
+//	printf("path: %s\n", (*data)->path);
 	ft_strdel(&(*data)->path);
 	free(*data);
 	*data = NULL;
-}
-
-void		delete_input(char **input)
-{
-	int		i;
-
-	i = 0;
-	while (input[i])
-		ft_strdel(&input[i++]);
 }
 
 void		delete_alldata(t_meta **data, int opts)
@@ -79,4 +70,13 @@ void		delete_alldata(t_meta **data, int opts)
 		d = tmp;
 	}
 	*data = NULL;
+}
+
+void		delete_input(char **input)
+{
+	int		i;
+
+	i = 0;
+	while (input[i])
+		ft_strdel(&input[i++]);
 }

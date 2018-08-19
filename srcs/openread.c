@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/18 15:56:50 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/19 11:50:23 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/19 13:03:36 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,20 @@ void			openread_dir(char *dirname, int opts)
 void			get_file(char *filename, int opts)
 {
 	t_meta			*data;
+	t_width			wd;
 
 	data = NULL;
+	wd.size = 1;
+	wd.link = 1;
+	wd.usr = 1;
+	wd.grp = 1;
 	if (errno == ENOTDIR)
 	{
 		if (MATCH(opts, LL))
 		{
 			create_data(&data, filename, filename);
 			data = get_metadata(data, opts);
-			print_longformat(data, 1, 1);
+			print_longformat(data, wd);
 			delete_data(&data, opts);
 		}
 		else

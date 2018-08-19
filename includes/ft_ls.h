@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:37 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/19 11:50:26 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/19 16:21:03 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/xattr.h>
+# include <sys/acl.h>
 # include <time.h>
 # include <errno.h>
 # include <pwd.h>
@@ -32,12 +33,21 @@
 # define MAJOR(dev) ((int)(((unsigned int) (dev) >> 24) & 0xff))
 # define MINOR(dev) ((int)((dev) & 0xff))
 # define HALF_A_YEAR 15778463
+# define MAX_PATH 1024
 # define LL 1
 # define LR 2
 # define CR 4
 # define LT 8
 # define LA 16
 # define CG 32
+
+typedef struct	s_width
+{
+	int		link;
+	int		size;
+	int		usr;
+	int		grp;
+}				t_width;
 
 typedef struct	s_meta
 {
@@ -92,15 +102,25 @@ void			lformat_handler(t_meta **data, int opts);
 void			time_handler(t_meta **data, int opts);
 
 /*
+** get width
+*/
+
+int				get_size_wd(t_meta *data, int opts);
+int				get_link_wd(t_meta *data, int opts);
+int				get_usr_wd(t_meta *data, int opts);
+int				get_group_wd(t_meta *data, int opts);
+
+/*
 ** print funcs
 */
 
-void			print_longformat(t_meta *data, int width_size, int width_link);
+void			print_longformat(t_meta *data, t_width wd);
 void			print_dircontent(t_meta **data, int opts);
 
 /*
 ** error handlers
 */
+
 void			illegal_option(char c);
 void			open_error(char *filename);
 
@@ -110,5 +130,6 @@ void			open_error(char *filename);
 
 t_meta			*get_metadata(t_meta *data, int opts);
 t_meta			*get_mode(struct stat st, t_meta *data);
+char			get_attributes(struct stat st, char path[MAX_PATH]);
 
 #endif

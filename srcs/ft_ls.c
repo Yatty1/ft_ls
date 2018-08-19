@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:26 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/19 11:50:22 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/19 16:43:00 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,54 +22,43 @@ static void		one_case(int opts)
 	exit(0);
 }
 
-void			process_input(char **v, int opts, int argc)
+char			**convert_input(char **argv, int argc)
 {
+	char	**in;
 	int		j;
-	DIR		*dir;
 
 	j = 0;
-	while (v[j])
-	{
-		if (!(dir = opendir(v[j])))
-			get_file(v[j], opts);
-		else
-		{
-			if (argc > 2)
-				j == 0 ? ft_printf("%s:\n", v[j]) : ft_printf("\n%s:\n", v[j]);
-			openread_dir(v[j], opts);
-		}
-		j++;
-	}
+	in = (char **)malloc(sizeof(char *) * argc);
+	while (*++argv)
+		in[j++] = ft_strdup(*argv);
+	in[j] = 0;
+	return (in);
 }
 
 int				main(int argc, char **argv)
 {
 	DIR				*dir;
-	char			**input;
+	char			**in;
 	int				opts;
 	int				j;
 
-	j = 0;
 	argv = check_option(&argc, argv, &opts);
 	if (argc == 1)
 		one_case(opts);
-	input = (char **)malloc(sizeof(char *) * argc);
-	while (*++argv)
-		input[j++] = ft_strdup(*argv);
-	input[j] = 0;
-	quick_sort(input, 0, argc - 2, !MATCH(opts, LR));
+	in = convert_input(argv, argc);
+	quick_sort(in, 0, argc - 2, !MATCH(opts, LR));
 	j = 0;
-	while (input[j])
+	while (in[j])
 	{
-		if (!(dir = opendir(input[j])))
-			get_file(input[j++], opts);
+		if (!(dir = opendir(in[j])))
+			get_file(in[j++], opts);
 		else
 		{
 			if (argc > 2)
-				j == 0 ? ft_printf("%s:\n", input[j]) : ft_printf("\n%s:\n", input[j]);
-			openread_dir(input[j++], opts);
+				j == 0 ? ft_printf("%s:\n", in[j])
+					: ft_printf("\n%s:\n", in[j]);
+			openread_dir(in[j++], opts);
 		}
 	}
-	while (1);
 	return (0);
 }
