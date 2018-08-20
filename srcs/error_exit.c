@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 14:29:35 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/20 12:33:40 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/20 14:36:51 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,17 @@ void	illegal_option(char c)
 
 void	open_error(char *filename)
 {
+	char	*str;
+
 	ft_putstr_fd("./ft_ls: ", 2);
-	ft_putstr_fd(filename, 2);
+	if (errno == EACCES)
+	{
+		str= ft_strlast(filename, '/');
+		ft_putstr_fd(str, 2);
+		free(str);
+	}
+	else
+		ft_putstr_fd(filename, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putendl_fd(strerror(errno), 2);
 }

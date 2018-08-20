@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:37 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/20 11:14:53 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/20 14:07:07 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,15 +96,6 @@ void			quick_sort(char **input, int left, int right, int is_asc);
 
 void			lformat_handler(t_meta **data, int opts);
 void			time_handler(t_meta **data, int opts);
-
-/*
-** get width
-*/
-
-int				get_size_wd(t_meta *data, int opts);
-int				get_link_wd(t_meta *data, int opts);
-int				get_usr_wd(t_meta *data, int opts);
-int				get_group_wd(t_meta *data, int opts);
 
 /*
 ** print funcs

@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 15:29:21 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/20 11:09:32 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/20 14:31:04 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ t_meta			*get_metadata(t_meta *data, int opts)
 	if ((pd = getpwuid(data->st.st_uid)))
 		data->owner = ft_strdup(pd->pw_name);
 	else
-		data->owner = ft_ltoa(data->st.st_uid);
+		data->owner = ft_lltoa(data->st.st_uid);
 	if ((gr = getgrgid(data->st.st_gid)))
 		data->group = ft_strdup(gr->gr_name);
 	else
-		data->group = ft_ltoa(data->st.st_uid);
+		data->group = ft_lltoa(data->st.st_uid);
 	data->symlink = get_symlink(data->st, data);
 	data->major = MAJOR(data->st.st_rdev);
 	data->minor = MINOR(data->st.st_rdev);

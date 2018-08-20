@@ -6,34 +6,32 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/18 14:10:38 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/19 17:18:53 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/20 14:43:14 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static int		get_sizelinkblock(t_meta **data, int opts)
+static int		count_digit(size_t size)
 {
-	struct stat	st;
-	t_meta		*d;
-	int			blocks;
+	int		i;
+
+	i = 0;
+	while (size)
+	{
+		size /= 10;
+		i++;
+	}
+	return (i);
+}
+
+long			set_alldata(t_meta **data, int opts, t_width *wd)
+{
+	t_meta	*d;
+	long	blocks;
 
 	d = *data;
 	blocks = 0;
-	while (d)
-	{
-		blocks = d->name[0] == '.' && !MATCH(opts, LA) ?
-			blocks : blocks + st.st_blocks;
-		d = d->next;
-	}
-	return (blocks);
-}
-
-void			set_alldata(t_meta **data, int opts)
-{
-	t_meta	*d;
-
-	d = *data;
 	while (d)
 	{
 		if (d->name[0] == '.' && !MATCH(opts, LA))
@@ -42,47 +40,35 @@ void			set_alldata(t_meta **data, int opts)
 			continue ;
 		}
 		d = get_metadata(d, opts);
-		d = d->next;
-	}
-}
-
-void			get_width(t_meta **data, int opts, t_width *wd)
-{
-	t_meta	*d;
-
-	d = *data;
-	wd->usr = 1;
-	wd->grp = 1;
-	while (d)
-	{
-		if (d->name[0] == '.' && !MATCH(opts, LA))
-		{
-			d = d->next;
-			continue ;
-		}
+		blocks += d->st.st_blocks;
 		wd->usr = ft_strlen(d->owner) > wd->usr ?
 			ft_strlen(d->owner) : wd->usr;
 		wd->grp = ft_strlen(d->group) > wd->grp ?
 			ft_strlen(d->group) : wd->grp;
+		wd->size = count_digit(d->st.st_size) > wd->size ?
+			count_digit(d->st.st_size) : wd->size;
+		wd->link = count_digit(d->st.st_nlink) > wd->link ?
+			count_digit(d->st.st_nlink) : wd->link;
 		d = d->next;
 	}
+	return (blocks);
 }
 
 void			lformat_handler(t_meta **data, int opts)
 {
-	t_width	wd;
-	int		blocks;
-	t_meta	*d;
+	t_width		wd;
+	long		blocks;
+	t_meta		*d;
 
-	blocks = get_sizelinkblock(data, opts);
 	d = *data;
-	wd.size = get_size_wd(d, opts);
-	wd.link = get_link_wd(d, opts);
+	wd.link = 1;
+	wd.size = 1;
+	wd.usr = 1;
+	wd.grp = 1;
+	blocks = set_alldata(data, opts, &wd);
 	ft_putstr("total ");
 	ft_putnbr(blocks);
 	ft_putchar('\n');
-	set_alldata(data, opts);
-	get_width(data, opts, &wd);
 	while (d)
 	{
 		if (d->name[0] == '.' && !MATCH(opts, LA))
