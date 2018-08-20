@@ -6,14 +6,14 @@
 #    By: syamada <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/06 21:25:07 by syamada           #+#    #+#              #
-#    Updated: 2018/08/18 14:11:33 by syamada          ###   ########.fr        #
+#    Updated: 2018/08/20 15:24:59 by syamada          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			:= gcc
 CFLAGS		:= -Wall -Werror -Wextra
 DEBUG		:= -g
-SANITIZER	:= -fsanitizer=address
+SANITIZER	:= -fsanitize=address
 
 LIB			:= libft.a
 LIBDIR		:= libft
@@ -24,7 +24,8 @@ INCDIR		:= includes
 LS			:= ft_ls
 LSSRC		:= $(addprefix $(SRCDIR)/, ft_ls.c check_option.c sort_funcs.c \
 						error_exit.c get_info.c get_filetype.c bubble_sort.c \
-						data_utils.c print_funcs.c lformat_handlers.c sort_handler.c)
+						data_utils.c print_funcs.c lformat_handlers.c \
+						openread.c get_attributes.c)
 
 #colors
 COM_COLOR	:= \033[0;34m

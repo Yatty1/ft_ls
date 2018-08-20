@@ -1,37 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort_handler.c                                     :+:      :+:    :+:   */
+/*   ft_strlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/18 10:33:19 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 10:37:34 by syamada          ###   ########.fr       */
+/*   Created: 2018/08/20 11:25:35 by syamada           #+#    #+#             */
+/*   Updated: 2018/08/20 12:33:24 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "libft.h"
 
-static void		get_time(t_meta **data)
+char		*ft_strlast(char *str, char c)
 {
-	struct stat	st;
-	t_meta	*d;
+	char	*last;
 
-	d = *data;
-	while (d)
+	last = str;
+	while (*str)
 	{
-		stat(d->path, &st);
-		d->m_time = st.st_mtime;
-		d = d->next;
+		if (*str == c && *(str + 1))
+			last = ++str;
+		if (*str)
+			str++;
 	}
-}
-
-t_meta			*dispatch_sort(t_meta **data, int opts)
-{
-	if (MATCH(opts, LT))
-	{
-		get_time(data);
-		return (time_sort(data));
-	}
-	return (bubble_sort(data, !MATCH(opts, LR)));
+	last = ft_strdup(last);
+	return (last);
 }

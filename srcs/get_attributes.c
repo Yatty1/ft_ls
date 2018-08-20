@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdel.c                                        :+:      :+:    :+:   */
+/*   get_attributes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/11 18:53:24 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 21:34:59 by syamada          ###   ########.fr       */
+/*   Created: 2018/08/19 15:14:40 by syamada           #+#    #+#             */
+/*   Updated: 2018/08/20 15:19:08 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_ls.h"
 
-void	ft_lstdel(t_list **alst, void (*del)(void *, size_t))
+char		get_attributes(struct stat st, char path[PATH_MAX])
 {
-	t_list	*list;
-	t_list	*n_list;
+	char	buf[100];
+	acl_t	tmp;
 
-	if (alst == NULL || del == NULL)
-		return ;
-	list = *alst;
-	while (list)
+	if (listxattr(path, buf, 100, XATTR_NOFOLLOW) > 0)
+		return ('@');
+	if ((tmp = acl_get_link_np(path, ACL_TYPE_EXTENDED)) > 0)
 	{
-		n_list = list->next;
-		ft_lstdelone(&list, del);
-		list = n_list;
+		acl_free(tmp);
+		return ('+');
 	}
-	*alst = NULL;
+	return (' ');
 }

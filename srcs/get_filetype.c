@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 13:31:37 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 14:11:06 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/20 14:31:11 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@ static char		get_filetype(struct stat st)
 {
 	if (MATCH(st.st_mode, S_IFLNK))
 		return ('l');
-	if (MATCH(st.st_mode, S_IFREG))
-		return ('-');
-	if (MATCH(st.st_mode, S_IFDIR))
-		return ('d');
 	if (MATCH(st.st_mode, S_IFCHR))
 		return ('c');
 	if (MATCH(st.st_mode, S_IFBLK))
@@ -28,6 +24,10 @@ static char		get_filetype(struct stat st)
 		return ('p');
 	if (MATCH(st.st_mode, S_IFSOCK))
 		return ('s');
+	if (MATCH(st.st_mode, S_IFDIR))
+		return ('d');
+	if (MATCH(st.st_mode, S_IFREG))
+		return ('-');
 	return (' ');
 }
 
@@ -66,7 +66,7 @@ static char		get_othexepermit(struct stat st)
 
 t_meta			*get_mode(struct stat st, t_meta *data)
 {
-	data->mode = ft_strnew(10);
+	data->mode = ft_strnew(11);
 	data->mode[0] = get_filetype(st);
 	data->mode[1] = MATCH(st.st_mode, S_IRUSR) ? 'r' : '-';
 	data->mode[2] = MATCH(st.st_mode, S_IWUSR) ? 'w' : '-';
@@ -77,5 +77,6 @@ t_meta			*get_mode(struct stat st, t_meta *data)
 	data->mode[7] = MATCH(st.st_mode, S_IROTH) ? 'r' : '-';
 	data->mode[8] = MATCH(st.st_mode, S_IWOTH) ? 'w' : '-';
 	data->mode[9] = get_othexepermit(st);
+	data->mode[10] = get_attributes(st, data->path);
 	return (data);
 }

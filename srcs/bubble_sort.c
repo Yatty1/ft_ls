@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 16:29:38 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 10:27:24 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/20 15:19:09 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,9 @@ static void		cpy_data(t_meta **dest, t_meta *src)
 	t_meta	*data;
 
 	data = *dest;
-//	data->mode = src->mode;
-//	data->n_links = src->n_links;
-//	data->owner = src->owner;
-//	data->group = src->group;
-//	data->size = src->size;
-//	data->m_time = src->m_time;
 	data->name = src->name;
-//don't forget symlink
 	data->path = src->path;
+	data->st = src->st;
 }
 
 static void		swap_data(t_meta **first, t_meta **second)
@@ -48,7 +42,7 @@ t_meta			*time_sort(t_meta **data)
 		s = *data;
 		while (s->next)
 		{
-			if (s->m_time < s->next->m_time)
+			if (s->st.st_mtime < s->next->st.st_mtime)
 				swap_data(&s, &s->next);
 			s = s->next;
 		}
@@ -57,7 +51,7 @@ t_meta			*time_sort(t_meta **data)
 	return (*data);
 }
 
-t_meta			*bubble_sort(t_meta	**data, int is_asc)
+t_meta			*bubble_sort(t_meta **data, int is_asc)
 {
 	t_meta	*f;
 	t_meta	*s;

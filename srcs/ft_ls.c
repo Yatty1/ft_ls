@@ -6,94 +6,55 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:26 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 14:57:09 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/20 15:25:09 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-DIR		*open_dir(char *dirname)
+static void		one_case(int opts)
 {
-	DIR		*dir;
+	char	*str;
 
-	if (!(dir = opendir(dirname)))
-	{
-		open_error(dirname);
-		return (NULL);
-	}
-	return (dir);
+	str = ft_strdup(".");
+	openread_dir(str, opts);
+	ft_strdel(&str);
+	exit(0);
 }
 
-void	openread_dir(char *dirname, int opts)
+char			**convert_input(char **argv, int argc)
 {
-	DIR				*dir;
-	struct dirent	*dp;
-	struct stat		st;
-	char			*path;
-	t_meta			*data;
+	char	**in;
+	int		j;
 
-	data = NULL;
-	if (!(dir = open_dir(dirname)))
-		return ;
-	while ((dp = readdir(dir)))
-	{
-		path = ft_strjoin_with(dirname, dp->d_name, '/');
-		create_data(&data, dp->d_name, path);
-		ft_strdel(&path);
-	}
-	data = dispatch_sort(&data, opts);
-	print_dircontent(&data, opts);
-	while (data && MATCH(opts, CR))
-	{
-		stat(data->path, &st);
-		if (ft_strequ(".", data->name) || ft_strequ("..", data->name)
-				|| !MATCH(st.st_mode, S_IFDIR) || (data->name[0] == '.' && !MATCH(opts, LA)))
-		{
-			data = data->next;
-			continue ;
-		}
-		ft_printf("\n%s:\n", data->path);
-		openread_dir(data->path, opts);
-		data = data->next;
-	}
-	closedir(dir);
+	j = 0;
+	in = (char **)malloc(sizeof(char *) * argc);
+	while (*++argv)
+		in[j++] = ft_strdup(*argv);
+	in[j] = NULL;
+	return (in);
 }
 
-void	get_file(char *filename, int opts)
+int				main(int argc, char **argv)
 {
-	t_meta			*data;
-
-	if (errno == ENOTDIR)
-	{
-		create_data(&data, filename, filename);
-		if (MATCH(opts, LL))
-		{
-			data = get_metadata(data, opts);
-			print_longformat(data, 1, 1);
-		}
-		else
-			ft_putendl(filename);
-	}
-	else
-		open_error(filename);
-}
-
-int		main(int argc, char **argv)
-{
-	DIR				*dir;
+	char			**in;
 	int				opts;
-	int				i;
+	int				j;
 
-	i = 1;
 	argv = check_option(&argc, argv, &opts);
 	if (argc == 1)
-		openread_dir(ft_strdup("."), opts);
-	while (argv[i])
+		one_case(opts);
+	in = convert_input(argv, argc);
+	quick_sort(in, 0, argc - 2, !MATCH(opts, LR));
+	j = 0;
+	while (in[j])
 	{
-		if (!(dir = opendir(argv[i])))
-			get_file(ft_strdup(argv[i++]), opts);
-		else
-			openread_dir(ft_strdup(argv[i++]), opts);
+		if (argc > 2)
+			j == 0 ? ft_printf("%s:\n", in[j])
+				: ft_printf("\n%s:\n", in[j]);
+		openread_dir(in[j++], opts);
 	}
+	delete_input(in);
+	free(in);
 	return (0);
 }
