@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 13:31:37 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/19 16:21:05 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/19 17:51:22 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@ static char		get_filetype(struct stat st)
 {
 	if (MATCH(st.st_mode, S_IFLNK))
 		return ('l');
-	if (MATCH(st.st_mode, S_IFREG))
-		return ('-');
-	if (MATCH(st.st_mode, S_IFDIR))
-		return ('d');
 	if (MATCH(st.st_mode, S_IFCHR))
 		return ('c');
 	if (MATCH(st.st_mode, S_IFBLK))
@@ -28,6 +24,10 @@ static char		get_filetype(struct stat st)
 		return ('p');
 	if (MATCH(st.st_mode, S_IFSOCK))
 		return ('s');
+	if (MATCH(st.st_mode, S_IFDIR))
+		return ('d');
+	if (MATCH(st.st_mode, S_IFREG))
+		return ('-');
 	return (' ');
 }
 

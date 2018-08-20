@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 22:00:07 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/19 16:24:14 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/19 17:03:14 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void		create_data(t_meta **data, char *name, char *path)
 {
-	t_meta	*new;
+	t_meta		*new;
+	struct stat	st;
 
+	lstat(path, &st);
 	new = (t_meta *)malloc(sizeof(t_meta));
 	new->name = ft_strdup(name);
 	new->path = ft_strdup(path);
@@ -25,6 +27,7 @@ void		create_data(t_meta **data, char *name, char *path)
 	new->date = NULL;
 	new->time = NULL;
 	new->symlink = NULL;
+	new->st = st;
 	new->next = NULL;
 	if (!*data)
 	{

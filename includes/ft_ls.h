@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:37 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/19 16:21:03 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/19 17:56:12 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 # include <pwd.h>
 # include <grp.h>
 # include <uuid/uuid.h>
-
 
 # define MATCH(value, flag) ((value & flag) == flag)
 # define MAJOR(dev) ((int)(((unsigned int) (dev) >> 24) & 0xff))
@@ -52,11 +51,8 @@ typedef struct	s_width
 typedef struct	s_meta
 {
 	char			*mode;
-	unsigned int	n_links;
 	char			*owner;
 	char			*group;
-	off_t			size;
-	time_t			m_time;
 	char			*date;
 	char			*time;
 	int				major;
@@ -64,6 +60,7 @@ typedef struct	s_meta
 	char			*name;
 	char			*symlink;
 	char			*path;
+	struct stat		st;
 	struct s_meta	*next;
 }				t_meta;
 
@@ -114,7 +111,7 @@ int				get_group_wd(t_meta *data, int opts);
 ** print funcs
 */
 
-void			print_longformat(t_meta *data, t_width wd);
+void			print_longformat(t_meta *data, t_width wd, int opts);
 void			print_dircontent(t_meta **data, int opts);
 
 /*

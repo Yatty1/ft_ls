@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 16:29:38 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/18 19:14:27 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/19 16:56:39 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void		cpy_data(t_meta **dest, t_meta *src)
 	data = *dest;
 	data->name = src->name;
 	data->path = src->path;
+	data->st = src->st;
 }
 
 static void		swap_data(t_meta **first, t_meta **second)
@@ -41,7 +42,7 @@ t_meta			*time_sort(t_meta **data)
 		s = *data;
 		while (s->next)
 		{
-			if (s->m_time < s->next->m_time)
+			if (s->st.st_mtime < s->next->st.st_mtime)
 				swap_data(&s, &s->next);
 			s = s->next;
 		}

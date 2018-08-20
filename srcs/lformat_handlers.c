@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/18 14:10:38 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/19 16:21:05 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/19 17:18:53 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@ static int		get_sizelinkblock(t_meta **data, int opts)
 	blocks = 0;
 	while (d)
 	{
-		lstat(d->path, &st);
-		d->size = st.st_size;
-		d->n_links = st.st_nlink;
 		blocks = d->name[0] == '.' && !MATCH(opts, LA) ?
 			blocks : blocks + st.st_blocks;
 		d = d->next;
@@ -93,7 +90,7 @@ void			lformat_handler(t_meta **data, int opts)
 			d = d->next;
 			continue ;
 		}
-		print_longformat(d, wd);
+		print_longformat(d, wd, opts);
 		d = d->next;
 	}
 }
