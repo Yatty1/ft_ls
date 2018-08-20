@@ -6,19 +6,19 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/18 15:56:50 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/19 17:30:23 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/20 11:06:45 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static DIR		*open_dir(char *dirname)
+static DIR		*open_dir(char *dirname, int opts)
 {
 	DIR		*dir;
 
 	if (!(dir = opendir(dirname)))
 	{
-		open_error(dirname);
+		get_file(dirname, opts);
 		return (NULL);
 	}
 	return (dir);
@@ -51,7 +51,7 @@ void			openread_dir(char *dirname, int opts)
 	t_meta			*data;
 
 	data = NULL;
-	if (!(dir = open_dir(dirname)))
+	if (!(dir = open_dir(dirname, opts)))
 		return ;
 	while ((dp = readdir(dir)))
 	{

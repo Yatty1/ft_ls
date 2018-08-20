@@ -6,29 +6,11 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/14 07:48:59 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/19 10:17:05 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/20 11:08:51 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-char			**convert_two(t_list *list)
-{
-	char	**input;
-	int		i;
-	int		len;
-
-	i = 0;
-	len = ft_lstsize(list);
-	input = (char **)malloc(sizeof(char *) * (len + 1));
-	while (list)
-	{
-		input[i++] = ft_strdup(list->content);
-		list = list->next;
-	}
-	input[i] = 0;
-	return (input);
-}
 
 static void		swap_str(char **a, char **b)
 {
@@ -70,11 +52,9 @@ void			quick_sort(char **input, int left, int right, int is_asc)
 	quick_sort(input, pivot + 1, right, is_asc);
 }
 
-char			**sort_content(t_list *list, int is_asc)
+t_meta			*dispatch_sort(t_meta **data, int opts)
 {
-	char	**input;
-
-	input = convert_two(list);
-	quick_sort(input, 0, ft_lstsize(list) - 1, is_asc);
-	return (input);
+	if (MATCH(opts, LT))
+		return (time_sort(data));
+	return (bubble_sort(data, !MATCH(opts, LR)));
 }

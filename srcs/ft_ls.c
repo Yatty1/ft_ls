@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:26 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/19 17:03:45 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/20 11:06:35 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,12 @@ char			**convert_input(char **argv, int argc)
 	in = (char **)malloc(sizeof(char *) * argc);
 	while (*++argv)
 		in[j++] = ft_strdup(*argv);
-	in[j] = 0;
+	in[j] = NULL;
 	return (in);
 }
 
 int				main(int argc, char **argv)
 {
-	DIR				*dir;
 	char			**in;
 	int				opts;
 	int				j;
@@ -50,15 +49,13 @@ int				main(int argc, char **argv)
 	j = 0;
 	while (in[j])
 	{
-		if (!(dir = opendir(in[j])))
-			get_file(in[j++], opts);
-		else
-		{
-			if (argc > 2)
-				j == 0 ? ft_printf("%s:\n", in[j])
-					: ft_printf("\n%s:\n", in[j]);
-			openread_dir(in[j++], opts);
-		}
+		if (argc > 2)
+			j == 0 ? ft_printf("%s:\n", in[j])
+				: ft_printf("\n%s:\n", in[j]);
+		openread_dir(in[j++], opts);
 	}
+	delete_input(in);
+	free(in);
+	while (1);
 	return (0);
 }

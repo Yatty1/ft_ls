@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 22:00:07 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/19 17:03:14 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/20 10:45:25 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,13 @@ void		delete_data(t_meta **data, int opts)
 
 void		delete_alldata(t_meta **data, int opts)
 {
-	t_meta	*d;
 	t_meta	*tmp;
 
-	d = *data;
-	while (d)
+	while ((*data))
 	{
-		tmp = d->next;
-		delete_data(&d, opts);
-		d = tmp;
+		tmp = (*data)->next;
+		delete_data(&*data, opts);
+		(*data) = tmp;
 	}
 	*data = NULL;
 }
