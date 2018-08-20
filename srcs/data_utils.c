@@ -6,19 +6,29 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 22:00:07 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/20 14:42:58 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/20 15:22:08 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		create_data(t_meta **data, char *name, char *path)
+static int			read_stat(char *path, struct stat *st)
+{
+	if (lstat(path, st) < 0)
+	{
+		open_error(path);
+		return (0);
+	}
+	return (1);
+}
+
+void				create_data(t_meta **data, char *name, char *path)
 {
 	t_meta		*new;
 	struct stat	st;
 
-	if (lstat(path, &st) < 0)
-		open_error(path);
+	if (!read_stat(path, &st))
+		return ;
 	new = (t_meta *)malloc(sizeof(t_meta));
 	new->name = ft_strdup(name);
 	new->path = ft_strdup(path);
@@ -39,7 +49,7 @@ void		create_data(t_meta **data, char *name, char *path)
 	*data = new;
 }
 
-void		delete_data(t_meta **data, int opts)
+void				delete_data(t_meta **data, int opts)
 {
 	ft_strdel(&(*data)->mode);
 	ft_strdel(&(*data)->owner);
@@ -53,7 +63,7 @@ void		delete_data(t_meta **data, int opts)
 	*data = NULL;
 }
 
-void		delete_alldata(t_meta **data, int opts)
+void				delete_alldata(t_meta **data, int opts)
 {
 	t_meta	*tmp;
 
@@ -66,7 +76,7 @@ void		delete_alldata(t_meta **data, int opts)
 	*data = NULL;
 }
 
-void		delete_input(char **input)
+void				delete_input(char **input)
 {
 	int		i;
 

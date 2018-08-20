@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 14:29:35 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/20 14:36:51 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/20 15:16:32 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	open_error(char *filename)
 	ft_putstr_fd("./ft_ls: ", 2);
 	if (errno == EACCES)
 	{
-		str= ft_strlast(filename, '/');
+		str = ft_strlast(filename, '/');
 		ft_putstr_fd(str, 2);
 		free(str);
 	}
