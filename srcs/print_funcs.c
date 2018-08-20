@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 22:49:14 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/20 15:18:49 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/20 15:39:27 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void			print_longformat(t_meta *data, t_width wd, int opts)
 	{
 		ft_printf("%s %*d %-*s  %-*s  %*d, %*d %s %*s ", data->mode,
 				wd.link, data->st.st_nlink, wd.usr, data->owner, wd.grp,
-				data->group, wd.size, data->major, wd.size, data->minor,
+				data->group, wd.major, data->major, wd.minor, data->minor,
 				data->date, 5, data->time);
 		color_print(data, opts);
 	}

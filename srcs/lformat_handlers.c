@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/18 14:10:38 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/20 15:20:40 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/20 15:39:25 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,22 @@ static int		count_digit(size_t size)
 	return (i);
 }
 
+static void		set_width(t_meta *d, t_width *wd)
+{
+	wd->usr = ft_strlen(d->owner) > wd->usr ?
+		ft_strlen(d->owner) : wd->usr;
+	wd->grp = ft_strlen(d->group) > wd->grp ?
+		ft_strlen(d->group) : wd->grp;
+	wd->size = count_digit(d->st.st_size) > wd->size ?
+		count_digit(d->st.st_size) : wd->size;
+	wd->link = count_digit(d->st.st_nlink) > wd->link ?
+		count_digit(d->st.st_nlink) : wd->link;
+	wd->major = count_digit(d->major) > wd->major ?
+		count_digit(d->major) : wd->major;
+	wd->minor = count_digit(d->minor) > wd->minor ?
+		count_digit(d->minor) : wd->minor;
+}
+
 long			set_alldata(t_meta **data, int opts, t_width *wd)
 {
 	t_meta	*d;
@@ -41,14 +57,7 @@ long			set_alldata(t_meta **data, int opts, t_width *wd)
 		}
 		d = get_metadata(d, opts);
 		blocks += d->st.st_blocks;
-		wd->usr = ft_strlen(d->owner) > wd->usr ?
-			ft_strlen(d->owner) : wd->usr;
-		wd->grp = ft_strlen(d->group) > wd->grp ?
-			ft_strlen(d->group) : wd->grp;
-		wd->size = count_digit(d->st.st_size) > wd->size ?
-			count_digit(d->st.st_size) : wd->size;
-		wd->link = count_digit(d->st.st_nlink) > wd->link ?
-			count_digit(d->st.st_nlink) : wd->link;
+		set_width(d, wd);
 		d = d->next;
 	}
 	return (blocks);
@@ -65,6 +74,8 @@ void			lformat_handler(t_meta **data, int opts)
 	wd.size = 1;
 	wd.usr = 1;
 	wd.grp = 1;
+	wd.major = 1;
+	wd.minor = 1;
 	blocks = set_alldata(data, opts, &wd);
 	ft_putstr("total ");
 	ft_putnbr(blocks);

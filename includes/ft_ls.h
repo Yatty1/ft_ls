@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:37 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/20 14:07:07 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/20 15:34:00 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef struct	s_width
 	int		size;
 	int		usr;
 	int		grp;
+	int		major;
+	int		minor;
 }				t_width;
 
 typedef struct	s_meta
