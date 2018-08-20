@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_attributes.c                                   :+:      :+:    :+:   */
+/*   ft_strlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/19 15:14:40 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/20 11:12:41 by syamada          ###   ########.fr       */
+/*   Created: 2018/08/20 11:25:35 by syamada           #+#    #+#             */
+/*   Updated: 2018/08/20 12:33:24 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "libft.h"
 
-char		get_attributes(struct stat st, char path[PATH_MAX])
+char		*ft_strlast(char *str, char c)
 {
-	char	buf[100];
-	acl_t	tmp;
+	char	*last;
 
-	if (listxattr(path, buf, 100, XATTR_NOFOLLOW) > 0)
-		return ('@');
-	if ((tmp = acl_get_link_np(path, ACL_TYPE_EXTENDED)) > 0)
+	last = str;
+	while (*str)
 	{
-		acl_free(tmp);
-		return ('+');
+		if (*str == c && *(str + 1))
+			last = ++str;
+		if (*str)
+			str++;
 	}
-	return (' ');
+	last = ft_strdup(last);
+	return (last);
 }

@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:26 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/20 11:06:35 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/20 13:01:26 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,5 @@ int				main(int argc, char **argv)
 	}
 	delete_input(in);
 	free(in);
-	while (1);
 	return (0);
 }

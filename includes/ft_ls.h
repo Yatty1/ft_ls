@@ -6,7 +6,7 @@
 /*   By: syamada <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 19:38:37 by syamada           #+#    #+#             */
-/*   Updated: 2018/08/19 17:56:12 by syamada          ###   ########.fr       */
+/*   Updated: 2018/08/20 11:14:53 by syamada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@
 # define MAJOR(dev) ((int)(((unsigned int) (dev) >> 24) & 0xff))
 # define MINOR(dev) ((int)((dev) & 0xff))
 # define HALF_A_YEAR 15778463
-# define MAX_PATH 1024
 # define LL 1
 # define LR 2
 # define CR 4
@@ -127,6 +126,6 @@ void			open_error(char *filename);
 
 t_meta			*get_metadata(t_meta *data, int opts);
 t_meta			*get_mode(struct stat st, t_meta *data);
-char			get_attributes(struct stat st, char path[MAX_PATH]);
+char			get_attributes(struct stat st, char path[PATH_MAX]);
 
 #endif
