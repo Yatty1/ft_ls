@@ -83,27 +83,3 @@ If the modification time of the file is more than 6 months in the past or future
 		      T     The sticky bit is set (mode 1000), but not execute or search permission.  (See chmod(1) or sticky(8).)
 
 		      t     The sticky bit is set (mode 1000), and is searchable or executable.  (See chmod(1) or sticky(8).)
-
-
-#### Bonus
-
-- `-G` : Color depending on type of files or directories.
-
-#### Test
-
-`ls`
-`ls <filename>`
-`ls -r`
-`ls -t`
-`ls -a`
-`ls -R /usr`
-`ls -R`
-`ls -l`
-`ls -l <filename>`
-`ls -l <dir with no right>`
-`ls -l <not existing dir>`
-`ls -l /dev`
-
-### ACL
-
-- Access Control List(ACL)
